@@ -1,13 +1,17 @@
 package ColorSwitch;
 
+import javafx.animation.PathTransition;
 import javafx.event.EventHandler;
+import javafx.scene.Group;
 import javafx.scene.input.KeyCode;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.LineTo;
 import javafx.scene.shape.MoveTo;
 import javafx.scene.shape.Path;
+import javafx.util.Duration;
 
+import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.util.Objects;
 
@@ -17,10 +21,13 @@ public class Ball {
     private static final int x = 775;
     private int y;
     private static Ball instanceOfBall;
-
-    public static Ball getInstance(Color ballColor, int y) {
+    private static Group group;
+    private Circle circle;
+    public static Ball getInstance(Color ballColor, int y, Group group) {
         if (instanceOfBall == null) {
             instanceOfBall = new Ball(ballColor, y);
+            Ball.group = group;
+            instanceOfBall.init();
         }
         return instanceOfBall;
     }
@@ -79,30 +86,93 @@ public class Ball {
                 '}';
     }
 
-    public void changeColor () {
+    public void changeColor (Color ballColor) {
         // TODO: Change color randomly
+        circle.setFill(ballColor);
     }
 
     public void init () {
-        Circle circle = new Circle();
-        circle.setCenterX(775);
-        circle.setCenterY(700);
+
+        circle = new Circle();
+        circle.setCenterX(x);
+        circle.setCenterY(y);//y = 700
         circle.setRadius(25);
-        circle.setFill(Color.RED);
+        circle.setFill(ballColor);
+
+        group.getChildren().addAll(circle);
+
+
+    }
+    private final int transition = 4000000;
+    private volatile boolean isMovingUp = false;
+    public void ballMoveDown () {
+//        //TODO: make a loop for gravity
+        Runnable runnable = () -> {
+                for (double i = 0; i < 1000000000; i++) {
+                    if (isMovingUp) {
+                        break;
+                    }
+                    if (circle.getCenterY() != y) {
+                        if (isMovingUp) {
+                            break;
+                        }
+                        if (i/transition == 1) {
+                            circle.setCenterY(circle.getCenterY() + 1);
+                            i = i/transition;
+                        }
+                    }
+                }
+        };
+
+        Thread jumpingThread = new Thread(runnable);
+        jumpingThread.start();
     }
 
-    public static void ballMove () {
-        Path path = new Path();
-        //TODO: make a loop for gravity
-        path.getElements().add(new MoveTo(x, 700));
-        path.getElements().add(new LineTo(x, 600));
-        path.getElements().add(new LineTo(x, 500));
-        path.getElements().add(new LineTo(x, 400));
-    }
-
-    public static void jump () {
+    private int jumpHight;
+    public void jump () {
         //TODO: set button functions for up movement
-        instanceOfBall.y-=100;
+
+        jumpHight += 100;
+
+        Runnable runnable = () -> {
+            while (jumpHight > 0) {
+
+
+                if (isMovingUp) {
+
+                    //Wait
+                }
+
+                isMovingUp = true;
+                for (double i = 0; i < 1000000000; i++) {
+                    if (jumpHight <= 0) {
+                        break;
+                    }
+                    if (i/transition == 1) {
+                        circle.setCenterY(circle.getCenterY() - 1);
+                        jumpHight--;
+                        i = i/transition;
+                    }
+
+
+                }
+
+                jumpHight-=100;
+                isMovingUp = false;
+                ballMoveDown();
+
+
+            }
+
+
+        };
+
+        Thread jumpingThread = new Thread(runnable);
+        jumpingThread.start();
+
+
+
+
     }
 
 
