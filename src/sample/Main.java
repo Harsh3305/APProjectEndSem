@@ -1,18 +1,13 @@
 package sample;
 
-import ColorSwitch.Ball;
-import javafx.animation.PathTransition;
+import Ball.Ball;
 import javafx.application.Application;
-import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Group;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.input.KeyEvent;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.*;
 import javafx.stage.Stage;
-import javafx.util.Duration;
 
 public class Main extends Application {
 
@@ -20,7 +15,7 @@ public class Main extends Application {
     public void start(Stage primaryStage) throws Exception{
         Parent root = FXMLLoader.load(getClass().getResource("sample.fxml"));
         primaryStage.setFullScreen(true);
-        primaryStage.setTitle("Game");
+           primaryStage.setTitle("Game");
         Group group = new Group();
         Ball playerBall  = Ball.getInstance(Color.RED, 700,group);
 
