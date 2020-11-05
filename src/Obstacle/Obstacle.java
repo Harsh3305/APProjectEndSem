@@ -1,19 +1,25 @@
 package Obstacle;
 
+import Dimention.Dimention;
+
+import java.awt.*;
 import java.util.Objects;
 
-public class Obstacle {
+public class Obstacle extends  Dimention{
     private Shape2D shape2D;
-    private int size;
-    private final int xCoor = 0;
-    private int yCoor = 0;
+//    private int size;
+//    private final int xCoor = 0;
+//    private int yCoor = 0;
 
     private ColorPattern pattern;
 
     public Obstacle(Shape2D shape2D, int size, int yCoor, ColorPattern pattern) {
         this.shape2D = shape2D;
-        this.size = size;
-        this.yCoor = yCoor;
+//        this.size = size;
+//        this.yCoor = yCoor;
+        this.radius = 0;
+        this.y = yCoor;
+        this.x = 0;//center
         this.pattern = pattern;
     }
 
@@ -26,23 +32,23 @@ public class Obstacle {
     }
 
     public int getSize() {
-        return size;
+        return radius;
     }
 
     public void setSize(int size) {
-        this.size = size;
+        this.radius = size;
     }
 
     public int getxCoor() {
-        return xCoor;
+        return x;
     }
 
     public int getyCoor() {
-        return yCoor;
+        return y;
     }
 
     public void setyCoor(int yCoor) {
-        this.yCoor = yCoor;
+        this.y = yCoor;
     }
 
     public ColorPattern getPattern() {
@@ -58,20 +64,26 @@ public class Obstacle {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Obstacle obstacle = (Obstacle) o;
-        return size == obstacle.size &&
-                xCoor == obstacle.xCoor &&
-                yCoor == obstacle.yCoor &&
-                Objects.equals(shape2D, obstacle.shape2D) &&
+        return Objects.equals(shape2D, obstacle.shape2D) &&
                 Objects.equals(pattern, obstacle.pattern);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(shape2D, size, xCoor, yCoor, pattern);
+        return Objects.hash(shape2D, pattern);
     }
 
     @Override
     public String toString() {
         return super.toString();
     }
+
+    public void rotate () {
+        //TODO:
+    }
+
+    public static void createStars () {
+
+    }
+
 }

@@ -1,16 +1,17 @@
 package Ball;
 
+import Dimention.Dimention;
 import javafx.scene.Group;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 
 import java.util.Objects;
 
-public class Ball {
+public class Ball extends Dimention {
     private Color ballColor;
-    private final static int sizeOfBall = 10;
-    private static final int x = 775;
-    private int y;
+//    private final static int sizeOfBall = 10;
+//    private static final int x = 775;
+//    private int y;
     private static Ball instanceOfBall;
     private static Group group;
     private Circle circle;
@@ -37,9 +38,9 @@ public class Ball {
         this.ballColor = ballColor;
     }
 
-    public static int getSizeOfBall() {
-        return sizeOfBall;
-    }
+//    public static int getSizeOfBall() {
+//        return sizeOfBall;
+//    }
 
     public int getX() {
         return x;

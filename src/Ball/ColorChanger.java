@@ -3,8 +3,10 @@ package Ball;
 import Obstacle.ColorPattern;
 import javafx.scene.paint.Color;
 
-public class ColorChanger {
-    private final int radius = 0;
+import java.awt.*;
+
+public class ColorChanger extends Dimension {
+
     private Ball playerBall;
 
     public ColorChanger(Ball playerBall) {

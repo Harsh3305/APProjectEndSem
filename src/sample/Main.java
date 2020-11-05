@@ -1,6 +1,9 @@
 package sample;
 
+import Background.BackgroundOfGame;
 import Ball.Ball;
+import SaveGame.SaveGame;
+import SaveGame.Score;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Group;
@@ -20,12 +23,30 @@ public class Main extends Application {
         Ball playerBall  = Ball.getInstance(Color.RED, 700,group);
 
         Scene scene = new Scene(group,400,500,Color.GRAY);
-
         detectKey(scene,playerBall);
-
         primaryStage.setScene(scene);
         primaryStage.show();
+        SaveGame saveGame = new SaveGame();
+        Score score =  saveGame.givePrevGame();
+
+        BackgroundOfGame backgroundOfGame = new BackgroundOfGame();
+        backgroundOfGame.setBackgroundOfGame();
+
+        if (score==null) {
+            // new game
+        }
+        else {
+            // prev game
+        }
+
     }
+
+
+    public static void increamentScre (Score score) {
+        score.increamentScore();
+    }
+
+
 
     public static void detectKey (Scene scene, Ball playerBall) {
 
