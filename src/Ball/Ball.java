@@ -1,25 +1,17 @@
-package ColorSwitch;
+package Ball;
 
-import javafx.animation.PathTransition;
-import javafx.event.EventHandler;
+import Dimention.Dimention;
 import javafx.scene.Group;
-import javafx.scene.input.KeyCode;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
-import javafx.scene.shape.LineTo;
-import javafx.scene.shape.MoveTo;
-import javafx.scene.shape.Path;
-import javafx.util.Duration;
 
-import java.awt.*;
-import java.awt.event.KeyEvent;
 import java.util.Objects;
 
-public class Ball {
+public class Ball extends Dimention {
     private Color ballColor;
-    private final static int sizeOfBall = 10;
-    private static final int x = 775;
-    private int y;
+//    private final static int sizeOfBall = 10;
+//    private static final int x = 775;
+//    private int y;
     private static Ball instanceOfBall;
     private static Group group;
     private Circle circle;
@@ -46,9 +38,9 @@ public class Ball {
         this.ballColor = ballColor;
     }
 
-    public static int getSizeOfBall() {
-        return sizeOfBall;
-    }
+//    public static int getSizeOfBall() {
+//        return sizeOfBall;
+//    }
 
     public int getX() {
         return x;
@@ -107,25 +99,30 @@ public class Ball {
     private volatile boolean isMovingUp = false;
     public void ballMoveDown () {
 //        //TODO: make a loop for gravity
-        Runnable runnable = () -> {
-                for (double i = 0; i < 1000000000; i++) {
-                    if (isMovingUp) {
-                        break;
-                    }
-                    if (circle.getCenterY() != y) {
-                        if (isMovingUp) {
-                            break;
-                        }
-                        if (i/transition == 1) {
-                            circle.setCenterY(circle.getCenterY() + 1);
-                            i = i/transition;
-                        }
-                    }
-                }
-        };
+//        Runnable runnable = () -> {
+//                for (double i = 0; i < 1000000000; i++) {
+//                    if (isMovingUp) {
+//                        break;
+//                    }
+//                    if (circle.getCenterY() != y) {
+//                        if (isMovingUp) {
+//                            break;
+//                        }
+//                        if (i/transition == 1) {
+//                            circle.setCenterY(circle.getCenterY() + 1);
+//                            i = i/transition;
+//                        }
+//                    }
+//                }
+//        };
+//
+//        Thread jumpingThread = new Thread(runnable);
+//        jumpingThread.start();
 
-        Thread jumpingThread = new Thread(runnable);
-        jumpingThread.start();
+//        newX = newX + 10;
+//        circle.setTranslateX(newX);
+
+
     }
 
     private int jumpHight;
@@ -169,10 +166,12 @@ public class Ball {
 
         Thread jumpingThread = new Thread(runnable);
         jumpingThread.start();
+    }
 
 
-
-
+    private void changeColor (){
+        ColorChanger changer = new ColorChanger(instanceOfBall);
+        changer.changeColor();
     }
 
 
