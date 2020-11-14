@@ -5,9 +5,10 @@ import javafx.scene.Group;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 
+import java.io.Serializable;
 import java.util.Objects;
 
-public class Ball extends Dimention {
+public class Ball extends Dimention implements Serializable {
     private Color ballColor;
 //    private final static int sizeOfBall = 10;
     private static final int x = 775;

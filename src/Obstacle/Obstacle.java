@@ -3,11 +3,12 @@ package Obstacle;
 import Dimention.Dimention;
 
 import java.awt.*;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class Obstacle extends  Dimention{
+public class Obstacle extends  Dimention  implements Serializable {
     private Shape2D shape2D;
 //    private int size;
 //    private final int xCoor = 0;

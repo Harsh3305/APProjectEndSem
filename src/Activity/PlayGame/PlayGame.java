@@ -2,12 +2,17 @@ package Activity.PlayGame;
 
 import Ball.Ball;
 import SaveGame.SaveGame;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.scene.Group;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 import javafx.scene.text.Text;
 import sample.Main;
+
+
 public class PlayGame {
 
 
@@ -15,12 +20,21 @@ public class PlayGame {
 
 
         Group group = new Group();
-        // Background Image
-//        Image image=new Image("file:switch.jpeg");
-//        ImageView mv =new ImageView(image);
-//        mv.setFitWidth(Screen.getPrimary().getVisualBounds().getWidth());
-//        mv.setFitHeight(Screen.getPrimary().getVisualBounds().getHeight());
-//        group.getChildren().addAll(mv);
+
+        //TODO: Do Button style
+
+        Button saveGameButton = new Button("Save the Game");
+        saveGameButton.setLayoutX(1350);
+        saveGameButton.setLayoutY(50);
+        saveGameButton.setScaleX(2);
+        saveGameButton.setScaleY(2);
+
+        saveGameButton.setOnAction(actionEvent -> {
+            SaveGame saveGame =new SaveGame();
+            saveGame.SaveGame();
+        });
+
+        group.getChildren().add(saveGameButton);
 
         Text Stars = new Text("Stars: 0");
         Stars.setScaleX(2);
@@ -33,15 +47,12 @@ public class PlayGame {
 
         // Background Color
         Color black = Color.rgb(42, 40, 42);
-        Scene scene = new Scene(group, 400,500, black);
+        Ball.getInstance(Color.RED, 700,group);
 
 
 
-        Ball playerBall  = Ball.getInstance(Color.RED, 700,group);
 
-
-
-        Main.udpateScene(scene);
+        Main.udpateScene(group);
     }
 
     private void putBall () {
