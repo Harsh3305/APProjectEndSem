@@ -5,8 +5,14 @@ import java.io.Serializable;
 public class Score implements Serializable {
     private int level;
     private int stars;
+    private static Score storeScore;
+    public static Score getInstance(int level, int stars) {
+        Score score = new Score(level,stars);
+        storeScore = score;
+        return score;
+    }
 
-    public Score(int level, int stars) {
+    private Score(int level, int stars) {
         this.level = level;
         this.stars = stars;
     }
@@ -31,4 +37,7 @@ public class Score implements Serializable {
         // TODO:
     }
 
+    public static Score giveCopy() {
+        return storeScore;
+    }
 }

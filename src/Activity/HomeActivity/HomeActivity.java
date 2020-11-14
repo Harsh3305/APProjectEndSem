@@ -21,15 +21,12 @@ public class HomeActivity extends Main {
     //Resume button
     //Save game
 
-    public HomeActivity() {
-//        this.scene = scene;
-    }
 
     public void pause() {
         //TODO:
     }
 
-    public void play () {
+    private void play () {
         //TODO:
 
 
@@ -116,7 +113,7 @@ public class HomeActivity extends Main {
         group.getChildren().add(Exit);
 
         // Background Color
-        Color black = Color.rgb(0, 40, 42);
+        Color black = Color.rgb(42, 40, 42);
         Scene scene = new Scene(group, 400,500, black);
 
 

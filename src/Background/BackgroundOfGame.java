@@ -17,5 +17,8 @@ public class BackgroundOfGame extends Main {
     }
 
 
+    public static BackgroundOfGame getCopy () {
+        return null;
+    }
 
 }

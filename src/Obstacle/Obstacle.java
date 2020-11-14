@@ -3,6 +3,8 @@ package Obstacle;
 import Dimention.Dimention;
 
 import java.awt.*;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 public class Obstacle extends  Dimention{
@@ -12,8 +14,8 @@ public class Obstacle extends  Dimention{
 //    private int yCoor = 0;
 
     private ColorPattern pattern;
-
-    public Obstacle(Shape2D shape2D, int size, int yCoor, ColorPattern pattern) {
+    private static ArrayList<Obstacle> obstacleArrayList = new ArrayList<Obstacle>();
+    private Obstacle(Shape2D shape2D, int size, int yCoor, ColorPattern pattern) {
         this.shape2D = shape2D;
 //        this.size = size;
 //        this.yCoor = yCoor;
@@ -21,6 +23,14 @@ public class Obstacle extends  Dimention{
         this.y = yCoor;
         this.x = 0;//center
         this.pattern = pattern;
+    }
+
+    public static Obstacle getInstance(Shape2D shape2D, int size, int yCoor, ColorPattern pattern) {
+        Obstacle obstacle = new Obstacle(shape2D,size,yCoor,pattern);
+
+        obstacleArrayList.add(obstacle);
+
+        return obstacle;
     }
 
     public Shape2D getShape() {
@@ -84,6 +94,10 @@ public class Obstacle extends  Dimention{
 
     public static void createStars () {
 
+    }
+
+    public static ArrayList<Obstacle> giveCopy () {
+        return obstacleArrayList;
     }
 
 }
