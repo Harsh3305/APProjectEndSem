@@ -176,6 +176,9 @@ public class Ball extends Dimention {
         changer.changeColor();
     }
 
+    public static Ball giveCopy () {
+        return instanceOfBall;
+    }
 
 
 

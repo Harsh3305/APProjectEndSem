@@ -52,10 +52,6 @@ public class Main extends Application {
         Button roundButton = new Button("Play");
         roundButton.setLayoutX(685);
         roundButton.setLayoutY(422);
-        /*Image imagines=new Image("file:switch.jpeg");
-
-        ImageView bt=new ImageView(imagines);
-        roundButton.setGraphic(bt);*/
         roundButton.setStyle(
                 "-fx-background-image: url('/switch.jpeg'); " +
                         "-fx-background-color: transparent;"+
@@ -65,17 +61,6 @@ public class Main extends Application {
                         "-fx-max-width: 200px; " +
                         "-fx-max-height: 200px;"
         );
-
-
-
-
-
-        /* StackPane layout = new StackPane(
-                roundButton
-        );
-        layout.setPadding(new Insets(10));
-        Scene scene = new Scene(layout);
-        primaryStage.setScene(scene);*/
 
 
         Color black = Color.rgb(42, 40, 42);
@@ -92,22 +77,6 @@ public class Main extends Application {
         primaryStage.show();
 
         detectKey(scene);
-
-
-        // create transtition
-//        Timeline timeline = new Timeline();
-//
-//        KeyValue kv = new KeyValue(imgView2.translateXProperty(), 0, Interpolator.EASE_BOTH);
-//        KeyFrame kf = new KeyFrame(Duration.seconds(1), kv);
-//        timeline.getKeyFrames().add(kf);
-//        timeline.setOnFinished(t->{
-//            // remove pane and restore scene 1
-//            root1.getChildren().setAll(rectangle1);
-//            // set scene 2
-//            primaryStage.setScene(scene2);
-//        });
-//        timeline.play();
-
 
 
     }
@@ -148,6 +117,8 @@ public class Main extends Application {
 
     public static void main(String[] args) {
         launch(args);
+//        SaveGame saveGame = new SaveGame();
+//        saveGame.SaveGame();
     }
 
     public static void udpateScene (Scene scene) {
