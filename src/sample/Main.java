@@ -1,60 +1,146 @@
 package sample;
 
+import Activity.HomeActivity.HomeActivity;
 import Background.BackgroundOfGame;
 import Ball.Ball;
 import SaveGame.SaveGame;
 import SaveGame.Score;
+import com.sun.javafx.event.BasicEventDispatcher;
+import javafx.animation.Interpolator;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.application.Application;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Insets;
 import javafx.scene.Group;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Circle;
+import javafx.stage.Screen;
 import javafx.stage.Stage;
 
-public class Main extends Application {
+import javax.xml.crypto.dsig.keyinfo.KeyValue;
+import java.net.URL;
 
+public class Main extends Application {
+    private static Stage pStage;
     @Override
     public void start(Stage primaryStage) throws Exception{
-        Parent root = FXMLLoader.load(getClass().getResource("sample.fxml"));
-        primaryStage.setFullScreen(true);
-           primaryStage.setTitle("Game");
-        Group group = new Group();
-        Ball playerBall  = Ball.getInstance(Color.RED, 700,group);
+        FXMLLoader loader = new FXMLLoader();
 
-        Scene scene = new Scene(group,400,500,Color.GRAY);
-        detectKey(scene,playerBall);
+        loader.setLocation(new URL("file:/C:/Users/Dell-User/IdeaProjects/APProjectEndSem/src/sample"));
+        pStage = primaryStage;
+        Parent root = FXMLLoader.load(getClass().getResource("sample.fxml"));
+        pStage.setFullScreenExitHint("");
+        primaryStage.setFullScreen(true);
+        primaryStage.setTitle("Game");
+        Group group = new Group();
+//        Ball playerBall  = Ball.getInstance(Color.RED, 700,group);
+        Image image=new Image("file:switch.jpeg");
+        ImageView mv =new ImageView(image);
+        mv.setFitWidth(Screen.getPrimary().getVisualBounds().getWidth());
+        mv.setFitHeight(Screen.getPrimary().getVisualBounds().getHeight());
+        group.getChildren().addAll(mv);
+
+        Button roundButton = new Button("Play");
+        roundButton.setLayoutX(685);
+        roundButton.setLayoutY(422);
+        /*Image imagines=new Image("file:switch.jpeg");
+
+        ImageView bt=new ImageView(imagines);
+        roundButton.setGraphic(bt);*/
+        roundButton.setStyle(
+                "-fx-background-image: url('/switch.jpeg'); " +
+                        "-fx-background-color: transparent;"+
+                        "-fx-background-radius: 200em; " +
+                        "-fx-min-width: 200px; " +
+                        "-fx-min-height: 200px; " +
+                        "-fx-max-width: 200px; " +
+                        "-fx-max-height: 200px;"
+        );
+
+
+
+
+
+        /* StackPane layout = new StackPane(
+                roundButton
+        );
+        layout.setPadding(new Insets(10));
+        Scene scene = new Scene(layout);
+        primaryStage.setScene(scene);*/
+
+
+        Color black = Color.rgb(42, 40, 42);
+        group.getChildren().add(roundButton);
+        Scene scene = new Scene(group,400,500,black);
+
+        roundButton.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent actionEvent) {
+                StartButtonOnClick();
+            }
+        });
         primaryStage.setScene(scene);
         primaryStage.show();
-        SaveGame saveGame = new SaveGame();
-        Score score =  saveGame.givePrevGame();
 
-        BackgroundOfGame backgroundOfGame = new BackgroundOfGame();
-        backgroundOfGame.setBackgroundOfGame();
+        detectKey(scene);
 
-        if (score==null) {
-            // new game
-        }
-        else {
-            // prev game
-        }
+
+        // create transtition
+//        Timeline timeline = new Timeline();
+//
+//        KeyValue kv = new KeyValue(imgView2.translateXProperty(), 0, Interpolator.EASE_BOTH);
+//        KeyFrame kf = new KeyFrame(Duration.seconds(1), kv);
+//        timeline.getKeyFrames().add(kf);
+//        timeline.setOnFinished(t->{
+//            // remove pane and restore scene 1
+//            root1.getChildren().setAll(rectangle1);
+//            // set scene 2
+//            primaryStage.setScene(scene2);
+//        });
+//        timeline.play();
+
+
 
     }
+
+
+
 
 
     public static void increamentScre (Score score) {
         score.increamentScore();
     }
 
+    public static void StartButtonOnClick () {
+        System.out.println("Hello");
+        HomeActivity homeActivity = new HomeActivity();
+        Scene scene =homeActivity.show();
+        pStage.setScene(scene);
+        pStage.setFullScreenExitHint("");
+        pStage.setFullScreen(true);
+    }
 
 
-    public static void detectKey (Scene scene, Ball playerBall) {
+    public static void detectKey (Scene scene) {
 
-        scene.setOnKeyPressed(event -> {
-            switch (event.getCode()) {
-                case UP -> jumpBall(playerBall);
+        scene.setOnMouseClicked(event -> {
+            switch (event.getButton()) {
+                case PRIMARY, SECONDARY, MIDDLE -> System.out.println(event.getButton().toString());
+
+
             }
         });
+
+
     }
     public static void jumpBall (Ball ball) {
         ball.jump();
@@ -63,4 +149,11 @@ public class Main extends Application {
     public static void main(String[] args) {
         launch(args);
     }
+
+    public static void udpateScene (Scene scene) {
+        pStage.setScene(scene);
+        pStage.setFullScreenExitHint("");
+        pStage.setFullScreen(true);
+    }
+
 }
