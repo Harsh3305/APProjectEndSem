@@ -10,11 +10,12 @@ import java.util.Objects;
 public class Ball extends Dimention {
     private Color ballColor;
 //    private final static int sizeOfBall = 10;
-//    private static final int x = 775;
+    private static final int x = 775;
 //    private int y;
     private static Ball instanceOfBall;
     private static Group group;
     private Circle circle;
+
     public static Ball getInstance(Color ballColor, int y, Group group) {
         if (instanceOfBall == null) {
             instanceOfBall = new Ball(ballColor, y);
@@ -27,6 +28,7 @@ public class Ball extends Dimention {
 
     private Ball(Color ballColor, int y) {
         this.ballColor = ballColor;
+
         this.y = y;
     }
 
