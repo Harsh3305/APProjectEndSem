@@ -5,10 +5,9 @@ import Background.BackgroundOfGame;
 import Ball.Ball;
 import SaveGame.SaveGame;
 import SaveGame.Score;
+//import animatefx.animation.*;
 import com.sun.javafx.event.BasicEventDispatcher;
-import javafx.animation.Interpolator;
-import javafx.animation.KeyFrame;
-import javafx.animation.Timeline;
+import javafx.animation.*;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -25,21 +24,22 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 
-import javax.xml.crypto.dsig.keyinfo.KeyValue;
 import java.net.URL;
 
 public class Main extends Application {
     private static Stage pStage;
+    private static Scene scene;
     @Override
     public void start(Stage primaryStage) throws Exception{
         FXMLLoader loader = new FXMLLoader();
 
-        loader.setLocation(new URL("file:/C:/Users/Dell-User/IdeaProjects/APProjectEndSem/src/sample"));
+        loader.setLocation(new URL("file:/C:/Users/Dell-User/IdeaProjects/APProjectEndSem/src/sample/scene2.fxml"));
         pStage = primaryStage;
         Parent root = FXMLLoader.load(getClass().getResource("sample.fxml"));
-        pStage.setFullScreenExitHint("");
-        primaryStage.setFullScreen(true);
+//        pStage.setFullScreenExitHint("");
+//        primaryStage.setFullScreen(true);
         primaryStage.setTitle("Game");
         Group group = new Group();
 //        Ball playerBall  = Ball.getInstance(Color.RED, 700,group);
@@ -52,6 +52,10 @@ public class Main extends Application {
         Button roundButton = new Button("Play");
         roundButton.setLayoutX(685);
         roundButton.setLayoutY(422);
+        /*Image imagines=new Image("file:switch.jpeg");
+
+        ImageView bt=new ImageView(imagines);
+        roundButton.setGraphic(bt);*/
         roundButton.setStyle(
                 "-fx-background-image: url('/switch.jpeg'); " +
                         "-fx-background-color: transparent;"+
@@ -63,20 +67,51 @@ public class Main extends Application {
         );
 
 
+
+
+
+        /* StackPane layout = new StackPane(
+                roundButton
+        );
+        layout.setPadding(new Insets(10));
+        Scene scene = new Scene(layout);
+        primaryStage.setScene(scene);*/
+
+
         Color black = Color.rgb(42, 40, 42);
         group.getChildren().add(roundButton);
-        Scene scene = new Scene(group,400,500,black);
-
+        scene = new Scene(group,400,500,black);
+//        scene.setRoot(); // TODO:
         roundButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent actionEvent) {
                 StartButtonOnClick();
+
             }
         });
         primaryStage.setScene(scene);
+
         primaryStage.show();
+//        new FadeIn(group).play();
+
 
         detectKey(scene);
+
+
+        // create transtition
+//        Timeline timeline = new Timeline();
+//
+//        KeyValue kv = new KeyValue(imgView2.translateXProperty(), 0, Interpolator.EASE_BOTH);
+//        KeyFrame kf = new KeyFrame(Duration.seconds(1), kv);
+//        timeline.getKeyFrames().add(kf);
+//        timeline.setOnFinished(t->{
+//            // remove pane and restore scene 1
+//            root1.getChildren().setAll(rectangle1);
+//            // set scene 2
+//            primaryStage.setScene(scene2);
+//        });
+//        timeline.play();
+
 
 
     }
@@ -89,13 +124,16 @@ public class Main extends Application {
         score.increamentScore();
     }
 
+
+
     public static void StartButtonOnClick () {
-        System.out.println("Hello");
+        System.out.println("Start Button Pressed");
         HomeActivity homeActivity = new HomeActivity();
-        Scene scene =homeActivity.show();
-        pStage.setScene(scene);
-        pStage.setFullScreenExitHint("");
-        pStage.setFullScreen(true);
+        Group g =homeActivity.show();
+
+//        new BounceOut(scene.getRoot()).play();
+        udpateScene(g);
+
     }
 
 
@@ -117,14 +155,21 @@ public class Main extends Application {
 
     public static void main(String[] args) {
         launch(args);
-//        SaveGame saveGame = new SaveGame();
-//        saveGame.SaveGame();
     }
 
     public static void udpateScene (Scene scene) {
+//        new BounceIn(scene.getRoot()).play();
         pStage.setScene(scene);
+
         pStage.setFullScreenExitHint("");
         pStage.setFullScreen(true);
+    }
+    public static void udpateScene (Group group) {
+//        new BounceIn(group).play();
+        scene.setRoot(group);
+
+//        pStage.setFullScreenExitHint("");
+//        pStage.setFullScreen(true);
     }
 
 }

@@ -1,6 +1,7 @@
 package Activity.HomeActivity;
 
 import Activity.PlayGame.PlayGame;
+import Activity.ResumeGame.ResumeActivity;
 import Ball.Ball;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -21,12 +22,15 @@ public class HomeActivity extends Main {
     //Resume button
     //Save game
 
+    public HomeActivity() {
+//        this.scene = scene;
+    }
 
     public void pause() {
         //TODO:
     }
 
-    private void play () {
+    public static void play() {
         //TODO:
 
 
@@ -40,6 +44,9 @@ public class HomeActivity extends Main {
     public void resume () {
         // TODO:
 
+        ResumeActivity resumeActivity = new ResumeActivity();
+        resumeActivity.showScreen();
+
 
     }
 
@@ -51,30 +58,57 @@ public class HomeActivity extends Main {
 
     }
 
-    public Scene show () {
+    public Group show () {
         Button NewGame,ResumeGame,Exit;
         // Buttons
         NewGame = new Button("New Game");
         ResumeGame = new Button("Resume Game");
         Exit = new Button("Exit Game");
+        NewGame.setStyle(
+                "-fx-background-color: linear-gradient(#ffd65b, #e68400), linear-gradient(#ffef84, #f2ba44), linear-gradient(#ffea6a, #efaa22), linear-gradient(#ffe657 0%, #f8c202 50%, #eea10b 100%), linear-gradient(from 0% 0% to 15% 50%, rgba(255,255,255,0.9), rgba(255,255,255,0));"+
+        "-fx-background-radius: 30;"+
+        "-fx-background-insets: 0,1,2,3,0;"+
+        "-fx-text-fill: #654b00;"+
+        "-fx-font-weight: bold;"+
+        "-fx-font-size: 14px;"+
+        "-fx-padding: 10 20 10 20;"
+        );
+        ResumeGame.setStyle(
+                "-fx-background-color: linear-gradient(#ffd65b, #e68400), linear-gradient(#ffef84, #f2ba44), linear-gradient(#ffea6a, #efaa22), linear-gradient(#ffe657 0%, #f8c202 50%, #eea10b 100%), linear-gradient(from 0% 0% to 15% 50%, rgba(255,255,255,0.9), rgba(255,255,255,0));"+
+                        "-fx-background-radius: 30;"+
+                        "-fx-background-insets: 0,1,2,3,0;"+
+                        "-fx-text-fill: #654b00;"+
+                        "-fx-font-weight: bold;"+
+                        "-fx-font-size: 14px;"+
+                        "-fx-padding: 10 20 10 20;"
+        );
+        Exit.setStyle(
+                "-fx-background-color: linear-gradient(#ffd65b, #e68400), linear-gradient(#ffef84, #f2ba44), linear-gradient(#ffea6a, #efaa22), linear-gradient(#ffe657 0%, #f8c202 50%, #eea10b 100%), linear-gradient(from 0% 0% to 15% 50%, rgba(255,255,255,0.9), rgba(255,255,255,0));"+
+                        "-fx-background-radius: 30;"+
+                        "-fx-background-insets: 0,1,2,3,0;"+
+                        "-fx-text-fill: #654b00;"+
+                        "-fx-font-weight: bold;"+
+                        "-fx-font-size: 14px;"+
+                        "-fx-padding: 10 20 10 20;"
+        );
 
         NewGame.setLayoutX(750);
-        NewGame.setLayoutY(170);
+        NewGame.setLayoutY(270);
 
         ResumeGame.setLayoutX(750);
         ResumeGame.setLayoutY(440);
 
         Exit.setLayoutX(750);
-        Exit.setLayoutY(710);
+        Exit.setLayoutY(610);
 
-        NewGame.setScaleX(3);
-        NewGame.setScaleY(3);
+        NewGame.setScaleX(2);
+        NewGame.setScaleY(2);
 
-        ResumeGame.setScaleX(3);
-        ResumeGame.setScaleY(3);
+        ResumeGame.setScaleX(2);
+        ResumeGame.setScaleY(2);
 
-        Exit.setScaleX(3);
-        Exit.setScaleY(3);
+        Exit.setScaleX(2);
+        Exit.setScaleY(2);
 
 
         // click listener
@@ -86,19 +120,9 @@ public class HomeActivity extends Main {
             }
         });
 
-        ResumeGame.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent actionEvent) {
-                resume();
-            }
-        });
+        ResumeGame.setOnAction(actionEvent -> resume());
 
-        Exit.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent actionEvent) {
-                exit();
-            }
-        });
+        Exit.setOnAction(actionEvent -> exit());
 
         Group group = new Group();
         // Background Image
@@ -113,12 +137,14 @@ public class HomeActivity extends Main {
         group.getChildren().add(Exit);
 
         // Background Color
-        Color black = Color.rgb(42, 40, 42);
-        Scene scene = new Scene(group, 400,500, black);
+//        Color black = Color.rgb(0, 40, 42);
+//        Scene scene = new Scene(group, 400,500, black);
+//
+//
+//
+//        return scene;
 
-
-
-        return scene;
+        return  group;
     }
 
 

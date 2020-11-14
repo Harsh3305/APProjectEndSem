@@ -4,7 +4,6 @@ import Ball.Ball;
 import Obstacle.Obstacle;
 
 import java.io.*;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public class SaveGame implements Serializable {
@@ -14,17 +13,17 @@ public class SaveGame implements Serializable {
     private ArrayList<Obstacle> obstacleArrayList;
     private static final long serialVersionUID = SerialCode.serialVersionUID;
 
-    public void fetchData () {
-
-    }
-
-    public void init () {
-
+    public ArrayList<SaveGame> fetchData () {
+        try {
+            return readToFiles();
+        }
+        catch (Exception e) {
+            return new ArrayList<>();
+        }
     }
 
     public void SaveGame () {
         ArrayList<SaveGame> saveGames = readToFiles();
-
         SaveGame game = new SaveGame();
         game.ball = Ball.giveCopy();
         game.obstacleArrayList = Obstacle.giveCopy();
@@ -43,7 +42,7 @@ public class SaveGame implements Serializable {
             System.out.println("The Object  was successfully written to a file");
 
         } catch (Exception ex) {
-            ex.printStackTrace();
+            System.out.println(ex.getMessage());
         }
     }
 
@@ -62,11 +61,17 @@ public class SaveGame implements Serializable {
             return result;
 
         } catch (Exception e) {
-            e.printStackTrace();
-            return new ArrayList<SaveGame>();
-        }
 
-//        return new ArrayList<SaveGame>();
+            e.printStackTrace();
+            writeToFile(new ArrayList<SaveGame>());
+            return new ArrayList<>();
+        }
     }
 
+    public int getScore() {
+        if (score !=null) {
+            return score.getStars();
+        }
+        return 0;
+    }
 }
