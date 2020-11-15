@@ -1,25 +1,26 @@
 package sample;
 
 import Activity.HomeActivity.HomeActivity;
-import Background.BackgroundOfGame;
+import Activity.PlayGame.PlayGame;
 import Ball.Ball;
-import SaveGame.SaveGame;
 import SaveGame.Score;
 //import animatefx.animation.*;
-import com.sun.javafx.event.BasicEventDispatcher;
-import javafx.animation.*;
+import animatefx.animation.BounceIn;
+import animatefx.animation.FadeIn;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
-import javafx.geometry.Insets;
+import javafx.geometry.Bounds;
 import javafx.scene.Group;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.StackPane;
+import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.stage.Screen;
@@ -90,12 +91,8 @@ public class Main extends Application {
             }
         });
         primaryStage.setScene(scene);
-
         primaryStage.show();
 //        new FadeIn(group).play();
-
-
-        detectKey(scene);
 
 
         // create transtition
@@ -113,20 +110,53 @@ public class Main extends Application {
 //        timeline.play();
 
 
+        detectKey();
 
     }
 
 
+//    @Override
+//    public void start(final Stage primaryStage) {
+//        Pane canvas = new Pane();
+//        final Scene scene = new Scene(canvas, 800, 600);
+//        primaryStage.setTitle("Bouncing Ball");
+//        primaryStage.setScene(scene);
+//        primaryStage.show();
+//        Circle circle = new Circle(15, Color.TRANSPARENT);
+//        circle.relocate(500, 100);
+//        canvas.getChildren().add(circle);
+//        final Timeline loop = new Timeline(new KeyFrame(Duration.millis(10), new
+//                EventHandler<ActionEvent>() {
+//                    double dx = 0;
+//                    double dy = 3;
+//                    @Override
+//                    public void handle(final ActionEvent t) {
+//                        circle.setLayoutX(circle.getLayoutX() + dx);
+//                        circle.setLayoutY(circle.getLayoutY() + dy);
+//                        final Bounds bounds = canvas.getBoundsInLocal();
+//                        if ( circle.getLayoutY() >= bounds.getMaxY() - circle.getRadius() )
+//                            dy = -dy;
+//                        if (circle.getLayoutY() <= 10) {
+//                            dy=-dy;
+//                        }
+//                        /**** ADD CODE HERE TO BOUNCE OFF OTHER 3 WALLS *****/
+//                    }
+//                }));
+//        loop.setCycleCount(Timeline.INDEFINITE);
+//        loop.play();
+//    }
 
 
 
-    public static void increamentScre (Score score) {
+
+
+    private static void increamentScre (Score score) {
         score.increamentScore();
     }
 
 
 
-    public static void StartButtonOnClick () {
+    private static void StartButtonOnClick () {
         System.out.println("Start Button Pressed");
         HomeActivity homeActivity = new HomeActivity();
         Group g =homeActivity.show();
@@ -137,15 +167,11 @@ public class Main extends Application {
     }
 
 
-    public static void detectKey (Scene scene) {
-
-        scene.setOnMouseClicked(event -> {
-            switch (event.getButton()) {
-                case PRIMARY, SECONDARY, MIDDLE -> System.out.println(event.getButton().toString());
+    private static void detectKey () {
 
 
-            }
-        });
+        scene.setOnKeyPressed(keyEvent -> PlayGame.keyDetect());
+
 
 
     }
@@ -157,19 +183,22 @@ public class Main extends Application {
         launch(args);
     }
 
-    public static void udpateScene (Scene scene) {
+//    public static void udpateScene (Scene scene) {
 //        new BounceIn(scene.getRoot()).play();
-        pStage.setScene(scene);
-
-        pStage.setFullScreenExitHint("");
-        pStage.setFullScreen(true);
-    }
+//        pStage.setScene(scene);
+//
+//        pStage.setFullScreenExitHint("");
+//        pStage.setFullScreen(true);
+//    }
     public static void udpateScene (Group group) {
-//        new BounceIn(group).play();
+        new FadeIn(group).play();
         scene.setRoot(group);
 
 //        pStage.setFullScreenExitHint("");
 //        pStage.setFullScreen(true);
     }
 
+    public static  Scene getScene() {
+        return scene;
+    }
 }

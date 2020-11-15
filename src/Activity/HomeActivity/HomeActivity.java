@@ -113,12 +113,7 @@ public class HomeActivity extends Main {
 
         // click listener
 
-        NewGame.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent actionEvent) {
-                play();
-            }
-        });
+        NewGame.setOnAction(actionEvent -> play());
 
         ResumeGame.setOnAction(actionEvent -> resume());
 
@@ -135,14 +130,6 @@ public class HomeActivity extends Main {
         group.getChildren().add(NewGame);
         group.getChildren().add(ResumeGame);
         group.getChildren().add(Exit);
-
-        // Background Color
-//        Color black = Color.rgb(0, 40, 42);
-//        Scene scene = new Scene(group, 400,500, black);
-//
-//
-//
-//        return scene;
 
         return  group;
     }
