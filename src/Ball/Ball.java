@@ -1,6 +1,7 @@
 package Ball;
 
 import Dimention.Dimention;
+import animatefx.animation.BounceInUp;
 import javafx.scene.Group;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
@@ -98,29 +99,29 @@ public class Ball extends Dimention implements Serializable {
 
 
     }
-    private final int transition = 4000000;
+    private final int transition = 3500000;
     private volatile boolean isMovingUp = false;
     public void ballMoveDown () {
-//        //TODO: make a loop for gravity
-//        Runnable runnable = () -> {
-//                for (double i = 0; i < 1000000000; i++) {
-//                    if (isMovingUp) {
-//                        break;
-//                    }
-//                    if (circle.getCenterY() != y) {
-//                        if (isMovingUp) {
-//                            break;
-//                        }
-//                        if (i/transition == 1) {
-//                            circle.setCenterY(circle.getCenterY() + 1);
-//                            i = i/transition;
-//                        }
-//                    }
-//                }
-//        };
-//
-//        Thread jumpingThread = new Thread(runnable);
-//        jumpingThread.start();
+        //TODO: make a loop for gravity
+        Runnable runnable = () -> {
+                for (double i = 0; i < 1000000000; i++) {
+                    if (isMovingUp) {
+                        break;
+                    }
+                    if (circle.getCenterY() != y) {
+                        if (isMovingUp) {
+                            break;
+                        }
+                        if (i/transition == 1) {
+                            circle.setCenterY(circle.getCenterY() + 1);
+                            i = i/transition;
+                        }
+                    }
+                }
+        };
+
+        Thread jumpingThread = new Thread(runnable);
+        jumpingThread.start();
 
 //        newX = newX + 10;
 //        circle.setTranslateX(newX);
