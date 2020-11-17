@@ -1,35 +1,95 @@
 package Ball;
 
 import Dimention.Dimention;
+import SaveGame.SerialCode;
 import animatefx.animation.BounceInUp;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.scene.Group;
+import javafx.scene.Scene;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
+import javafx.util.Duration;
 
+import java.awt.*;
 import java.io.Serializable;
 import java.util.Objects;
+import java.util.TimerTask;
 
 public class Ball extends Dimention implements Serializable {
     private Color ballColor;
-//    private final static int sizeOfBall = 10;
+    private static final long serialVersionUID = SerialCode.serialVersionUID;
     private static final int x = 775;
-//    private int y;
     private static Ball instanceOfBall;
     private static Group group;
     private Circle circle;
+
+    private final Timeline upLoop,downLoop;
 
     public static Ball getInstance(Color ballColor, int y, Group group) {
         if (instanceOfBall == null) {
             instanceOfBall = new Ball(ballColor, y);
             Ball.group = group;
-            instanceOfBall.init();
+
+
+
+//            instanceOfBall.init();
         }
         return instanceOfBall;
     }
 
-
+    public static void setBall (Ball ball) {
+        instanceOfBall = ball;
+    }
+    private int maxUp = 10;// TODO: Change from 100 to 10
     private Ball(Color ballColor, int y) {
         this.ballColor = ballColor;
+        this.downLoop = new Timeline(new KeyFrame(Duration.millis(16), new
+                EventHandler<>() {
+                    double dx = 0;
+                    double dyUp = 6;
+                    double dyDown = -3;
+                    double dy = dyDown;
+
+                    @Override
+                    public void handle(final ActionEvent t) {
+                        circle.setLayoutX(circle.getLayoutX() + dx);
+                        circle.setLayoutY(circle.getLayoutY() + dy);
+                        if (circle.getLayoutY()  <= 755)
+                            dy = dyUp;
+
+                        else {
+                            dy = 0;
+                        }
+                    }
+                }));
+
+        downLoop.setCycleCount(Timeline.INDEFINITE);
+        downLoop.play();
+
+        this.upLoop = new Timeline(new KeyFrame(Duration.millis(16), new
+                EventHandler<>() {
+                    double dx = 0;
+                    double dyUp = 6;
+                    double dyDown = -3;
+                    double dy = dyDown;
+
+                    @Override
+                    public void handle(final ActionEvent t) {
+                        circle.setLayoutX(circle.getLayoutX() + dx);
+                        circle.setLayoutY(circle.getLayoutY() + dy);
+                        if (circle.getLayoutY() >= 10 && maxUp > 0) {
+                            dy = dyDown;
+                            maxUp--;
+                        }
+                        else {
+                            dy=0;
+                        }
+                    }
+                }));
+        upLoop.setCycleCount(Timeline.INDEFINITE);
 
         this.y = y;
     }
@@ -42,9 +102,6 @@ public class Ball extends Dimention implements Serializable {
         this.ballColor = ballColor;
     }
 
-//    public static int getSizeOfBall() {
-//        return sizeOfBall;
-//    }
 
     public int getX() {
         return x;
@@ -88,90 +145,124 @@ public class Ball extends Dimention implements Serializable {
     }
 
     public void init () {
-
         circle = new Circle();
-        circle.setCenterX(x);
-        circle.setCenterY(y);//y = 700
+        circle.relocate(x,y);
+
         circle.setRadius(25);
         circle.setFill(ballColor);
 
         group.getChildren().addAll(circle);
 
 
+
+        Timeline masterThread = new Timeline(new KeyFrame(Duration.millis(100), new
+                EventHandler<>() {
+
+                    @Override
+                    public void handle(final ActionEvent t) {
+
+                        String up = upLoop.getStatus().toString();
+                        String down = downLoop.getStatus().toString();
+
+                        System.out.println(up + " " + down);
+
+
+                        if (up.equals("RUNNING") && down.equals("RUNNING")) {
+                            downLoop.pause();
+                        }
+
+                        else if (!up.equals("RUNNING") && ! down.equals("RUNNING")) {
+                            maxUp = 0;
+                            downLoop.play();
+                        }
+
+                        else if (maxUp <= 0) {
+                            if (up.equals("RUNNING")) {
+                                upLoop.pause();
+                            }
+                            if (down.equals("STOPPED") || down.equals("PAUSED")) {
+                                downLoop.play();
+                            }
+                        }
+
+                        else if (circle.getLayoutY() <= 10) {
+                            if (up.equals("RUNNING")) {
+                                upLoop.pause();
+                            }
+
+                            if (down.equals("STOPPED") || down.equals("PAUSED")) {
+                                downLoop.play();
+                            }
+                        }
+
+                        else {
+                            if (down.equals("RUNNING")) {
+                                downLoop.pause();
+                            }
+
+                        }
+
+                    }
+                }));
+        masterThread.setCycleCount(Timeline.INDEFINITE);
+        masterThread.play();
+
+
+
+
     }
     private final int transition = 3500000;
     private volatile boolean isMovingUp = false;
-    public void ballMoveDown () {
-        //TODO: make a loop for gravity
-        Runnable runnable = () -> {
-                for (double i = 0; i < 1000000000; i++) {
-                    if (isMovingUp) {
-                        break;
-                    }
-                    if (circle.getCenterY() != y) {
-                        if (isMovingUp) {
-                            break;
-                        }
-                        if (i/transition == 1) {
-                            circle.setCenterY(circle.getCenterY() + 1);
-                            i = i/transition;
-                        }
-                    }
-                }
-        };
 
-        Thread jumpingThread = new Thread(runnable);
-        jumpingThread.start();
-
-//        newX = newX + 10;
-//        circle.setTranslateX(newX);
-
-
-    }
 
     private int jumpHight;
     public void jump () {
-        //TODO: set button functions for up movement
 
-        jumpHight += 100;
-
-        Runnable runnable = () -> {
-            while (jumpHight > 0) {
+        upLoop.pause();
+        maxUp=10;// TODO: Change from 100 to 10
+        upLoop.play();
 
 
-                if (isMovingUp) {
 
-                    //Wait
-                }
-
-                isMovingUp = true;
-                for (double i = 0; i < 1000000000; i++) {
-                    if (jumpHight <= 0) {
-                        break;
-                    }
-                    if (i/transition == 1) {
-                        circle.setCenterY(circle.getCenterY() - 1);
-                        jumpHight--;
-                        i = i/transition;
-                    }
-
-
-                }
-
-                jumpHight-=100;
-                isMovingUp = false;
-                ballMoveDown();
-
-
-            }
-
-
-        };
-
-        Thread jumpingThread = new Thread(runnable);
-        jumpingThread.start();
     }
-
+//
+//    private int stepInOneKey ;
+//    private Timeline loop;
+//    private void initLoop () {
+//        stepInOneKey = 200;
+//                loop = new Timeline(new KeyFrame(Duration.millis(10), new
+//                EventHandler<>() {
+//                    double dx = 0;
+//                    double dyUp = 3;
+//                    double dyDown = -1;
+//                    double dy = dyDown;
+//
+//                    @Override
+//                    public void handle(final ActionEvent t) {
+//                        circle.setLayoutX(circle.getLayoutX() + dx);
+//                        circle.setLayoutY(circle.getLayoutY() + dy);
+////                        if (circle.getLayoutY() >= 775  )
+////                            dy = dyDown;
+////                        if (circle.getLayoutY() <= 10 || stepInOneKey <= 0) {
+////                            dy = dyUp;
+////                        }
+//
+//                        if (stepInOneKey > 0) {
+//                            dy = dyDown;
+//                            stepInOneKey--;
+//                        }
+//                        else {
+//                            dy = dyUp;
+//                        }
+//
+//
+//                    }
+//                }));
+//        loop.setCycleCount(Timeline.INDEFINITE);
+//
+//
+//
+//    }
 
     private void changeColor (){
         ColorChanger changer = new ColorChanger(instanceOfBall);

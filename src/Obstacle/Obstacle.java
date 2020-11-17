@@ -14,6 +14,11 @@ public class Obstacle extends  Dimention  implements Serializable {
 //    private final int xCoor = 0;
 //    private int yCoor = 0;
 
+
+    public static void updateList (ArrayList<Obstacle> obstacleArrayList ) {
+        Obstacle.obstacleArrayList = obstacleArrayList;
+    }
+
     private ColorPattern pattern;
     private static ArrayList<Obstacle> obstacleArrayList = new ArrayList<Obstacle>();
     private Obstacle(Shape2D shape2D, int size, int yCoor, ColorPattern pattern) {
@@ -28,9 +33,7 @@ public class Obstacle extends  Dimention  implements Serializable {
 
     public static Obstacle getInstance(Shape2D shape2D, int size, int yCoor, ColorPattern pattern) {
         Obstacle obstacle = new Obstacle(shape2D,size,yCoor,pattern);
-
         obstacleArrayList.add(obstacle);
-
         return obstacle;
     }
 
