@@ -8,6 +8,7 @@ import javafx.scene.Group;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.Background;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 import javafx.scene.text.Text;
@@ -36,9 +37,11 @@ public class ResumeActivity {
         for (int i = 0; i < size; i++) {
             Button button = new Button((i+1) + " Saved Game " + saveGameArrayList.get(i).getScore ());
             button.setLayoutX(750);
-            button.setLayoutY(200 + i*100);
+            button.setLayoutY(200 + i*80);
             button.setScaleX(2);
             button.setScaleY(2);
+            button.setBackground(Background.EMPTY);
+            button.setTextFill(Paint.valueOf("#FFFFFF"));
             group.getChildren().add(button);
 
             int finalI = i;

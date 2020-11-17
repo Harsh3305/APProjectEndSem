@@ -175,9 +175,6 @@ public class Main extends Application {
 
 
     }
-    public static void jumpBall (Ball ball) {
-        ball.jump();
-    }
 
     public static void main(String[] args) {
         launch(args);
