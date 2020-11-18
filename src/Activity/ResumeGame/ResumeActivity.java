@@ -93,7 +93,7 @@ public class ResumeActivity {
 
     }
     private void saveGameListener (int index, ArrayList<SaveGame> saveGameArrayList ) {
-        PlayGame game = new PlayGame();
+        PlayGame game = PlayGame.getInstance();
         game.resume(saveGameArrayList.get(index));
     }
     private ArrayList<SaveGame> fetchData () {
