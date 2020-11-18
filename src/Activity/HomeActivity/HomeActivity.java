@@ -34,7 +34,7 @@ public class HomeActivity extends Main {
         //TODO:
 
 
-        PlayGame newGame = new PlayGame();
+        PlayGame newGame = PlayGame.getInstance();
         newGame.startNewGame();
 
 

@@ -32,18 +32,14 @@ public class Ball extends Dimention implements Serializable {
         if (instanceOfBall == null) {
             instanceOfBall = new Ball(ballColor, y);
             Ball.group = group;
-
-
-
-//            instanceOfBall.init();
         }
         return instanceOfBall;
     }
-
+    private final int stepForUp = 20;
     public static void setBall (Ball ball) {
         instanceOfBall = ball;
     }
-    private int maxUp = 10;// TODO: Change from 100 to 10
+    private int maxUp = stepForUp;// TODO: Change from 100 to 10
     private Ball(Color ballColor, int y) {
         this.ballColor = ballColor;
         this.downLoop = new Timeline(new KeyFrame(Duration.millis(16), new
@@ -166,8 +162,18 @@ public class Ball extends Dimention implements Serializable {
 
                         System.out.println(up + " " + down);
 
+                        if (onPause) {
+                            upLoop.pause();
+                            downLoop.pause();
+                        }
 
-                        if (up.equals("RUNNING") && down.equals("RUNNING")) {
+
+                        else if (up.equals("PAUSED") && down.equals("PAUSED")) {
+                            downLoop.play();
+                        }
+
+
+                        else if (up.equals("RUNNING") && down.equals("RUNNING")) {
                             downLoop.pause();
                         }
 
@@ -219,51 +225,12 @@ public class Ball extends Dimention implements Serializable {
     public void jump () {
 
         upLoop.pause();
-        maxUp=10;// TODO: Change from 100 to 10
+        maxUp = stepForUp;// TODO: Change from 100 to 10
         upLoop.play();
 
 
 
     }
-//
-//    private int stepInOneKey ;
-//    private Timeline loop;
-//    private void initLoop () {
-//        stepInOneKey = 200;
-//                loop = new Timeline(new KeyFrame(Duration.millis(10), new
-//                EventHandler<>() {
-//                    double dx = 0;
-//                    double dyUp = 3;
-//                    double dyDown = -1;
-//                    double dy = dyDown;
-//
-//                    @Override
-//                    public void handle(final ActionEvent t) {
-//                        circle.setLayoutX(circle.getLayoutX() + dx);
-//                        circle.setLayoutY(circle.getLayoutY() + dy);
-////                        if (circle.getLayoutY() >= 775  )
-////                            dy = dyDown;
-////                        if (circle.getLayoutY() <= 10 || stepInOneKey <= 0) {
-////                            dy = dyUp;
-////                        }
-//
-//                        if (stepInOneKey > 0) {
-//                            dy = dyDown;
-//                            stepInOneKey--;
-//                        }
-//                        else {
-//                            dy = dyUp;
-//                        }
-//
-//
-//                    }
-//                }));
-//        loop.setCycleCount(Timeline.INDEFINITE);
-//
-//
-//
-//    }
-
     private void changeColor (){
         ColorChanger changer = new ColorChanger(instanceOfBall);
         changer.changeColor();
@@ -272,7 +239,11 @@ public class Ball extends Dimention implements Serializable {
     public static Ball giveCopy () {
         return instanceOfBall;
     }
-
-
-
+    boolean onPause;
+    public void pause() {
+        onPause = true;
+    }
+    public void resume () {
+        onPause = false;
+    }
 }

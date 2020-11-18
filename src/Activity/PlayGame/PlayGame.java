@@ -1,5 +1,6 @@
 package Activity.PlayGame;
 
+import Activity.PauseActivity.PauseActivity;
 import Ball.Ball;
 import Obstacle.Obstacle;
 import SaveGame.*;
@@ -10,6 +11,7 @@ import javafx.event.EventHandler;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 import javafx.scene.shape.Circle;
@@ -19,6 +21,17 @@ import sample.Main;
 
 
 public class PlayGame {
+
+
+    private PlayGame (){}
+    private static PlayGame instance;
+    public static PlayGame getInstance() {
+        if (instance == null) {
+            instance = new PlayGame();
+        }
+        return instance;
+    }
+
 
     private SaveGame saveGame;
     public void startNewGame () {
@@ -30,17 +43,15 @@ public class PlayGame {
         int y = 500;
         int score = 0;
         if (saveGame != null) {
-//            x = saveGame.getBall().getX();
-//            y = saveGame.getBall().getY();
             score = saveGame.getScore();
         }
         //TODO: Do Button style
 
-        Button saveGameButton = new Button("Save the Game");
-        saveGameButton.setLayoutX(1350);
-        saveGameButton.setLayoutY(50);
-        saveGameButton.setScaleX(2);
-        saveGameButton.setScaleY(2);
+        PauseGameButton = new Button("Pause");
+        PauseGameButton.setLayoutX(1350);
+        PauseGameButton.setLayoutY(50);
+        PauseGameButton.setScaleX(2);
+        PauseGameButton.setScaleY(2);
 
 
 
@@ -52,22 +63,19 @@ public class PlayGame {
 
         scene.setOnKeyPressed(keyEvent -> {
             ball.jump();
-
-
-
             System.out.println(keyEvent.getCode());
         });
 
 
 
-
-
-        saveGameButton.setOnAction(actionEvent -> {
-            SaveGame saveGame =new SaveGame();
-            saveGame.SaveGame();
+        PauseGameButton.setOnMouseClicked(mouseEvent -> {
+            onPause();
+            PauseActivity activity = new PauseActivity();
+            activity.show();
         });
 
-        group.getChildren().add(saveGameButton);
+
+        group.getChildren().add(PauseGameButton);
 
         Text Stars = new Text("Stars: "  +score );
         Stars.setScaleX(2);
@@ -78,9 +86,19 @@ public class PlayGame {
 
         group.getChildren().add(Stars);
 
-
-
         Main.udpateScene(group);
+    }
+    private Button PauseGameButton;
+
+    private void onPause () {
+        PauseGameButton.setVisible(false);
+        Ball ball = Ball.giveCopy();
+        ball.pause();
+    }
+    public void onResume () {
+        PauseGameButton.setVisible(true);
+        Ball ball = Ball.giveCopy();
+        ball.resume();
     }
 
     private void putBall () {
@@ -104,9 +122,6 @@ public class PlayGame {
 
     public static void keyDetect () {
         //TODO:
-//        Ball ball = Ball.giveCopy();
-//        ball.init();
-//        ball.jump();
     }
 
 
