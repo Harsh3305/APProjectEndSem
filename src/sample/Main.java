@@ -21,6 +21,7 @@ import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
+import javafx.scene.media.Media;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.stage.Screen;
@@ -35,6 +36,7 @@ public class Main extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception{
         FXMLLoader loader = new FXMLLoader();
+        Media media = new Media("https://firebasestorage.googleapis.com/v0/b/trumpplayer-424f8.appspot.com/o/Music%2FAUD-20190502-WA0015.mp3?alt=media&token=e200a2f5-d995-4785-8b39-e34a095d68cf");
 
         loader.setLocation(new URL("file:/C:/Users/Dell-User/IdeaProjects/APProjectEndSem/src/sample/scene2.fxml"));
         pStage = primaryStage;
