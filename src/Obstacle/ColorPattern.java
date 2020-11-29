@@ -6,15 +6,14 @@ import java.util.ArrayList;
 import java.util.Random;
 
 public class ColorPattern {
-    private final Color[] colors = new Color[6];
+    private final Color[] colors = new Color[4];
 
     public ColorPattern() {
-        colors[0] = Color.RED;
-        colors[1] = Color.GREEN;
-        colors[2] = Color.AZURE;
-        colors[3] = Color.VIOLET;
-        colors[4] = Color.PURPLE;
-        colors[5] = Color.GOLD;
+        colors[0] = Color.rgb(141,19,250);
+        colors[1] = Color.rgb(253,0,128);
+        colors[2] = Color.rgb(54,225,243);
+        colors[3] = Color.rgb(247,222,15);
+
     }
 
     public ArrayList<Color> assignrandom(int requiredColors) {
@@ -34,12 +33,12 @@ public class ColorPattern {
     }
 
     public Color giveNextColor (Color currentColor) {
-        Random random = new Random();
+
         while (true) {
-            int index = random.nextInt(colors.length - 1);
-            Color next = colors[index];
-            if (! next.equals(currentColor)) {
-                return next;
+            Random r = new Random();
+            int i = r.nextInt(colors.length );
+            if (! colors[i].equals(currentColor)) {
+                return colors[i];
             }
         }
     }

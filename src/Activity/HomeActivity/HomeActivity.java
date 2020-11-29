@@ -3,6 +3,8 @@ package Activity.HomeActivity;
 import Activity.PlayGame.PlayGame;
 import Activity.ResumeGame.ResumeActivity;
 import Ball.Ball;
+import Obstacle.Obstacle;
+import animatefx.animation.Flash;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Group;
@@ -13,7 +15,10 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
+import javafx.scene.text.Text;
 import javafx.stage.Screen;
+import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 import sample.Main;
 
 public class HomeActivity extends Main {
@@ -26,14 +31,10 @@ public class HomeActivity extends Main {
 //        this.scene = scene;
     }
 
-    public void pause() {
-        //TODO:
-    }
+
 
     public static void play() {
-        //TODO:
-
-
+        Ball.newGame();
         PlayGame newGame = PlayGame.getInstance();
         newGame.startNewGame();
 
@@ -42,8 +43,7 @@ public class HomeActivity extends Main {
     }
 
     public void resume () {
-        // TODO:
-
+        Ball.newGame();
         ResumeActivity resumeActivity = new ResumeActivity();
         resumeActivity.showScreen();
 
@@ -51,12 +51,45 @@ public class HomeActivity extends Main {
     }
 
     public void gameOver () {
-        // TODO:
+        Obstacle.GameOver();
+        Ball.stopBall();
+        Group  group = new Group();
+
+        Text gaveOver = new Text("Game Over");
+        gaveOver.setFill(Color.RED);
+        gaveOver.setLayoutX(500);
+        gaveOver.setLayoutY(300);
+        gaveOver.setScaleX(3);
+        gaveOver.setScaleY(3);
+
+        Scene scene=new Scene(group);
+        Stage stage = new Stage();
+        stage.initStyle(StageStyle.UNDECORATED);
+        scene.setFill(Color.rgb(42, 40, 42));
+        stage.setScene(scene);
+        stage.setWidth(1000);
+        stage.setHeight(700);
+        // System.out.println(stage.getX() + " "  + stage.getY());
+        stage.setOpacity(0.7);
+        stage.setMaximized(false);
+        stage.setResizable(false);
+        stage.getIcons().add(new Image("file:icon.png"));
+        new Flash(group).play();
+        stage.show();
+
+        System.out.println("Game over");
+
     }
 
     public void exit () {
-
+//    getpStage().hide();
+//        System.exit(0);
+        Main.goToMainScreen();
     }
+    public void exitmain(){
+        getpStage().hide();
+    }
+
 
     public Group show () {
         Button NewGame,ResumeGame,Exit;
@@ -117,7 +150,7 @@ public class HomeActivity extends Main {
 
         ResumeGame.setOnAction(actionEvent -> resume());
 
-        Exit.setOnAction(actionEvent -> exit());
+        Exit.setOnAction(actionEvent -> exitmain());
 
         Group group = new Group();
         // Background Image

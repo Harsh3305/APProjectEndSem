@@ -1,14 +1,21 @@
 package SaveGame;
 
+import javafx.scene.effect.DropShadow;
+import javafx.scene.image.Image;
+import javafx.scene.paint.Color;
+import javafx.scene.paint.ImagePattern;
+import javafx.scene.shape.Circle;
+
+import java.awt.*;
 import java.io.Serializable;
 
 public class Score implements Serializable {
-    private int level = 0;
+//    private int level = 0;
     private int stars = 0;
-    public static final long serialVersionUID = SerialCode.serialVersionUID;
+    public static final long serialVersionUID = 2L;
     private static Score storeScore;
-    public static Score getInstance(int level, int stars) {
-        Score score = new Score(level,stars);
+    public static Score getInstance(int stars) {
+        Score score = new Score(stars);
         if (storeScore ==null) storeScore = score;
         return storeScore;
     }
@@ -16,23 +23,23 @@ public class Score implements Serializable {
     public static void updateScore (int score) {
         if (storeScore == null)
         {
-            storeScore = new Score(0,0);
+            storeScore = new Score(score);
         }
         storeScore.stars =score;
     }
 
-    private Score(int level, int stars) {
-        this.level = level;
+    private Score(int stars) {
+//        this.level = level;
         this.stars = stars;
     }
 
-    public int getLevel() {
-        return level;
-    }
+//    public int getLevel() {
+//        return level;
+//    }
 
-    public void setLevel(int level) {
-        this.level = level;
-    }
+//    public void setLevel(int level) {
+//        this.level = level;
+//    }
 
     public int getStars() {
         return stars;
@@ -43,7 +50,14 @@ public class Score implements Serializable {
     }
 
     public void increamentScore () {
-        // TODO:
+        stars++;
+    }
+
+    public static void destroy () {
+        if (storeScore != null) {
+            storeScore.setStars(0);
+            storeScore = null;
+        }
     }
 
     public static Score giveCopy() {
