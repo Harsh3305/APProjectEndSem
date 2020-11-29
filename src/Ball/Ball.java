@@ -1,7 +1,7 @@
 package Ball;
 
 import Dimention.Dimention;
-import SaveGame.SerialCode;
+//import SaveGame.SerialCode;
 import animatefx.animation.BounceInUp;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -20,11 +20,17 @@ import java.util.TimerTask;
 
 public class Ball extends Dimention implements Serializable {
     private Color ballColor;
-    private static final long serialVersionUID = SerialCode.serialVersionUID;
-    private static final int x = 775;
+    private static final long serialVersionUID = 2L;
+
+    private final static int x=775;
     private static Ball instanceOfBall;
     private static Group group;
     private Circle circle;
+
+
+    public Circle getCircle() {
+        return circle;
+    }
 
     private final Timeline upLoop,downLoop;
 
@@ -35,6 +41,9 @@ public class Ball extends Dimention implements Serializable {
         }
         return instanceOfBall;
     }
+
+
+
     private final int stepForUp = 20;
     public static void setBall (Ball ball) {
         instanceOfBall = ball;
@@ -45,7 +54,7 @@ public class Ball extends Dimention implements Serializable {
         this.downLoop = new Timeline(new KeyFrame(Duration.millis(16), new
                 EventHandler<>() {
                     double dx = 0;
-                    double dyUp = 6;
+                    double dyUp = 6;// TODO:
                     double dyDown = -3;
                     double dy = dyDown;
 
@@ -59,6 +68,8 @@ public class Ball extends Dimention implements Serializable {
                         else {
                             dy = 0;
                         }
+
+                        setY((int)circle.getLayoutY());
                     }
                 }));
 
@@ -83,6 +94,8 @@ public class Ball extends Dimention implements Serializable {
                         else {
                             dy=0;
                         }
+                        setY((int)circle.getLayoutY());
+
                     }
                 }));
         upLoop.setCycleCount(Timeline.INDEFINITE);
@@ -96,6 +109,7 @@ public class Ball extends Dimention implements Serializable {
 
     public void setBallColor(Color ballColor) {
         this.ballColor = ballColor;
+        circle.setFill(ballColor);
     }
 
 
@@ -135,23 +149,25 @@ public class Ball extends Dimention implements Serializable {
                 '}';
     }
 
-    public void changeColor (Color ballColor) {
+    public void changeColor () {
         // TODO: Change color randomly
-        circle.setFill(ballColor);
+        ColorChanger.changeColor();
+
     }
-
-    public void init () {
+    private long slavedMoved = 0;
+    public long getSlavedMoved () {
+        return slavedMoved;
+    }
+    private Timeline masterThread;
+    public void init (Group slaveGroup) {
         circle = new Circle();
-        circle.relocate(x,y);
+       circle.relocate(x,y);
 
-        circle.setRadius(25);
+        circle.setRadius(18);
         circle.setFill(ballColor);
 
         group.getChildren().addAll(circle);
-
-
-
-        Timeline masterThread = new Timeline(new KeyFrame(Duration.millis(100), new
+        masterThread = new Timeline(new KeyFrame(Duration.millis(20), new
                 EventHandler<>() {
 
                     @Override
@@ -160,7 +176,11 @@ public class Ball extends Dimention implements Serializable {
                         String up = upLoop.getStatus().toString();
                         String down = downLoop.getStatus().toString();
 
-                        System.out.println(up + " " + down);
+
+                        if (up.equals("RUNNING") && !down.equals("RUNNING")) {
+                            slaveGroup.setLayoutY(slaveGroup.getLayoutY() + 3);
+                            slavedMoved+=3;
+                        }
 
                         if (onPause) {
                             upLoop.pause();
@@ -168,7 +188,7 @@ public class Ball extends Dimention implements Serializable {
                         }
 
 
-                        else if (up.equals("PAUSED") && down.equals("PAUSED")) {
+                        else if (up.equals("PAUSED") && down.equals("PAUSED") ) {
                             downLoop.play();
                         }
 
@@ -195,20 +215,22 @@ public class Ball extends Dimention implements Serializable {
                             if (up.equals("RUNNING")) {
                                 upLoop.pause();
                             }
-
                             if (down.equals("STOPPED") || down.equals("PAUSED")) {
                                 downLoop.play();
                             }
                         }
-
                         else {
                             if (down.equals("RUNNING")) {
                                 downLoop.pause();
                             }
-
                         }
 
+
+
                     }
+
+
+
                 }));
         masterThread.setCycleCount(Timeline.INDEFINITE);
         masterThread.play();
@@ -221,20 +243,40 @@ public class Ball extends Dimention implements Serializable {
     private volatile boolean isMovingUp = false;
 
 
+    public static void newGame () {
+        stopBall = false;
+    }
     private int jumpHight;
     public void jump () {
 
+        if (stopBall) {
+            return;
+        }
         upLoop.pause();
         maxUp = stepForUp;// TODO: Change from 100 to 10
         upLoop.play();
 
-
-
     }
-    private void changeColor (){
-        ColorChanger changer = new ColorChanger(instanceOfBall);
-        changer.changeColor();
+    private static boolean stopBall = false;
+    public static void stopBall () {
+        stopBall = true;
+        instanceOfBall.upLoop.stop();
+        instanceOfBall.downLoop.stop();
+        instanceOfBall.masterThread.stop();
     }
+
+    public static void destroyBall () {
+        if (instanceOfBall != null) {
+            instanceOfBall.upLoop.stop();
+            instanceOfBall.downLoop.stop();
+            instanceOfBall = null;
+        }
+    }
+
+//    private  void changeColor(){
+//        ColorChanger changer = new ColorChanger(instanceOfBall);
+//        changer.changeColor();
+//    }
 
     public static Ball giveCopy () {
         return instanceOfBall;

@@ -11,8 +11,8 @@ public class SaveGame implements Serializable {
     private final String PathOfStoreSaveGame = "SaveMyGame.harsh";
     private Score score;
     private BallFormat ball;
-    private ArrayList<Obstacle> obstacleArrayList;
-    private static final long serialVersionUID = SerialCode.serialVersionUID;
+//    private ArrayList<Obstacle> obstacleArrayList;
+    private static final long serialVersionUID = 2L;
     public ArrayList<SaveGame> fetchData () {
         try {
             return readToFiles();
@@ -37,21 +37,22 @@ public class SaveGame implements Serializable {
     public void setScore(Score score) {
         this.score = score;
     }
-
-    public ArrayList<Obstacle> getObstacleArrayList() {
-        return obstacleArrayList;
-    }
-
-    public void setObstacleArrayList(ArrayList<Obstacle> obstacleArrayList) {
-        this.obstacleArrayList = obstacleArrayList;
-    }
+//
+//    public ArrayList<Obstacle> getObstacleArrayList() {
+//        return obstacleArrayList;
+//    }
+//
+//    public void setObstacleArrayList(ArrayList<Obstacle> obstacleArrayList) {
+//        this.obstacleArrayList = obstacleArrayList;
+//    }
 
     public void SaveGame () {
         ArrayList<SaveGame> saveGames = readToFiles();
         SaveGame game = new SaveGame();
         ball = new BallFormat();
         ball.saveBall(Ball.giveCopy());
-        game.obstacleArrayList = Obstacle.giveCopy();
+//        game.obstacleArrayList = Obstacle.giveCopy();
+        game.ball = ball;
         game.score = Score.giveCopy();
         saveGames.add(0,game);
         writeToFile(saveGames);
