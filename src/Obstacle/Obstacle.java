@@ -19,6 +19,7 @@ import javafx.scene.shape.Circle;
 import javafx.scene.shape.Shape;
 import javafx.scene.transform.Rotate;
 import javafx.util.Duration;
+import sample.Controller;
 
 import java.awt.*;
 import java.io.Serializable;
@@ -186,7 +187,7 @@ public class Obstacle extends  Dimention  implements Serializable {
         del.setCenterX(Ball.giveCopy().getX());
         del.setRadius(120f);
 
-//        fetchImageOfStar(Ball.giveCopy().getX(), Cy,group);
+        fetchImageOfStar(Ball.giveCopy().getX(), Cy,group);
 //
 //        Circle star = new Circle();
 //        star.setRadius(50);
@@ -261,7 +262,7 @@ public class Obstacle extends  Dimention  implements Serializable {
                         int x = (int)slave.getLayoutY();
                         int y = ball.getY();
                         int d = Math.abs(x-y);
-                        if (d > 200 && d < 400) {
+                        if (d > 200) {
                             System.out.println("Returned");
                             return;
                         }
@@ -354,6 +355,7 @@ public class Obstacle extends  Dimention  implements Serializable {
 
                         if (intersect.getBoundsInParent().getWidth() > 0) {
                             Score.giveCopy().increamentScore();
+                            new Controller().playStarMusic();
                             star.setLayoutY(0);
                             star.setLayoutX(0);
                             star.setVisible(false);
