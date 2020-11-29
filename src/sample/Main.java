@@ -45,12 +45,15 @@ public class Main extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception{
 
+        Controller.init();
+        new Controller ().playMusic();
 
 //        FXMLLoader loader = new FXMLLoader();
 //
 //        loader.setLocation(new URL("file:src/sample/sample.fxml"));
         pStage = primaryStage;
         pStage.getIcons().add(new Image("file:icon.png"));
+
 
         Parent root = FXMLLoader.load(getClass().getResource("sample.fxml"));
 //        pStage.setFullScreenExitHint("");

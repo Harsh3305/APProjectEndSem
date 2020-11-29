@@ -85,7 +85,7 @@ public class PlayGame {
         Scene scene = Main.getScene();
         Ball ball = Ball.getInstance(Color.valueOf(color),y,group);
         ball.init(slaveGroup);
-        scene.setFill(Color.WHITE);
+        scene.setFill(Color.rgb(42, 40, 42));
         scene.setOnKeyPressed(keyEvent -> {
             ball.jump();
             System.out.println(keyEvent.getCode());

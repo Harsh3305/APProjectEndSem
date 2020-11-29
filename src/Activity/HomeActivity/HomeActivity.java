@@ -10,6 +10,7 @@ import javafx.event.EventHandler;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Control;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -19,6 +20,7 @@ import javafx.scene.text.Text;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+import sample.Controller;
 import sample.Main;
 
 public class HomeActivity extends Main {
@@ -54,7 +56,7 @@ public class HomeActivity extends Main {
         Obstacle.GameOver();
         Ball.stopBall();
         Group  group = new Group();
-
+        new Controller().playGameOver();
         Text gaveOver = new Text("Game Over");
         gaveOver.setFill(Color.RED);
         gaveOver.setLayoutX(500);
@@ -93,6 +95,7 @@ public class HomeActivity extends Main {
 
     public Group show () {
         Button NewGame,ResumeGame,Exit;
+        new Controller().playMusic();
         // Buttons
         NewGame = new Button("New Game");
         ResumeGame = new Button("Resume Game");
