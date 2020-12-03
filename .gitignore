@@ -4,3 +4,7 @@
 src/out
 src/SaveGame/SerialCode.java
 SaveMyGame.harsh
+coin.wav
+gameover.wav
+sound.wav
+#sound.mp3

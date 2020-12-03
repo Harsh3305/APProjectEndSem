@@ -9,6 +9,125 @@ public class Controller {
 
     public static void init () {
 
+        Thread back = new Thread(new Runnable() {
+            @Override
+            public void run() {
+
+                String path = "sound.wav";
+
+                AudioInputStream audioInputStream =
+                        null;
+                try {
+                    audioInputStream = AudioSystem.getAudioInputStream(new File(path).getAbsoluteFile());
+                } catch (UnsupportedAudioFileException | IOException e) {
+                    e.printStackTrace();
+                }
+
+                // create clip reference
+
+                try {
+
+                    backClip = AudioSystem.getClip();
+                    backClip.open(audioInputStream);
+                    backClip.stop();
+                    backClip.loop(Clip.LOOP_CONTINUOUSLY);
+//            audioPlayer.play();
+
+
+                } catch (LineUnavailableException | IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+
+
+        Thread gameover = new Thread(new Runnable() {
+            @Override
+            public void run() {
+
+
+                String path = "gameover.wav";
+
+                AudioInputStream audioInputStream =
+                        null;
+                try {
+                    audioInputStream = AudioSystem.getAudioInputStream(new File(path).getAbsoluteFile());
+                } catch (UnsupportedAudioFileException | IOException e) {
+                    e.printStackTrace();
+                }
+
+                // create clip reference
+
+                try {
+
+                    gameOverClip = AudioSystem.getClip();
+                    gameOverClip.open(audioInputStream);
+                    gameOverClip.stop();
+//            gameOverClip.loop(0);
+//            audioPlayer.play();
+
+
+
+                } catch (LineUnavailableException | IOException e) {
+                    e.printStackTrace();
+                }
+
+            }
+        });
+
+        Thread Coin = new Thread(new Runnable() {
+            @Override
+            public void run() {
+
+
+                String path = "coin.wav";
+
+                AudioInputStream audioInputStream =
+                        null;
+                try {
+                    audioInputStream = AudioSystem.getAudioInputStream(new File(path).getAbsoluteFile());
+                } catch (UnsupportedAudioFileException | IOException e) {
+                    e.printStackTrace();
+                }
+
+                // create clip reference
+
+                try {
+
+                    coinClip = AudioSystem.getClip();
+                    coinClip.open(audioInputStream);
+                    coinClip.stop();
+//            coinClip.loop(0);
+//            audioPlayer.play();
+
+
+                } catch (LineUnavailableException | IOException e) {
+                    e.printStackTrace();
+                }
+
+            }
+        });
+
+        back.start();
+        Coin.start();
+        gameover.start();
+
+        try {
+            back.join();
+            Coin.join();
+            gameover.join();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    public void playGameOver () {
+        stopBack();
+        gameOverClip.start();
+
+
+
         String path = "gameover.wav";
 
         AudioInputStream audioInputStream =
@@ -35,10 +154,14 @@ public class Controller {
             e.printStackTrace();
         }
 
+    }
 
-        path = "coin.wav";
+    public void playStarMusic () {
+        coinClip.start();
 
-        audioInputStream =
+        String path = "coin.wav";
+
+        AudioInputStream audioInputStream =
                 null;
         try {
             audioInputStream = AudioSystem.getAudioInputStream(new File(path).getAbsoluteFile());
@@ -61,41 +184,6 @@ public class Controller {
             e.printStackTrace();
         }
 
-
-
-        path = "sound.wav";
-
-        audioInputStream =
-                null;
-        try {
-            audioInputStream = AudioSystem.getAudioInputStream(new File(path).getAbsoluteFile());
-        } catch (UnsupportedAudioFileException | IOException e) {
-            e.printStackTrace();
-        }
-
-        // create clip reference
-
-        try {
-
-            backClip = AudioSystem.getClip();
-            backClip.open(audioInputStream);
-            backClip.stop();
-            backClip.loop(Clip.LOOP_CONTINUOUSLY);
-//            audioPlayer.play();
-
-
-        } catch (LineUnavailableException | IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    public void playGameOver () {
-        stopBack();
-        gameOverClip.start();
-    }
-
-    public void playStarMusic () {
-        coinClip.start();
     }
 
     public void playMusic () {

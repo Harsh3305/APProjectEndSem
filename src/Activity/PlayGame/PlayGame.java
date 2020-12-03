@@ -105,15 +105,16 @@ public class PlayGame {
 
         group.getChildren().add(PauseGameButton);
 
-        Text Stars = new Text("Stars: "  +S.getStars() );
+        Image image=new Image("file:star.png");
+        ImageView mv =new ImageView(image);
+        mv.setLayoutX(-140);
+        mv.setLayoutY(-180);
+        mv.setScaleX(0.1);
+        mv.setScaleY(0.1);
+        group.getChildren().add(mv);
+        Text Stars = new Text("     "  +S.getStars() );
 
-        Timeline starLoop =  new Timeline(new KeyFrame(Duration.millis(16), new
-                EventHandler<>() {
-                    @Override
-                    public void handle(final ActionEvent t) {
-                        Stars.setText("Stars: "  +S.getStars());
-                    }
-                }));
+        Timeline starLoop =  new Timeline(new KeyFrame(Duration.millis(16), t -> Stars.setText("     "  +S.getStars())));
 
         starLoop.setCycleCount(Timeline.INDEFINITE);
         starLoop.play();
@@ -139,10 +140,54 @@ public class PlayGame {
         colorChanger3.init(slaveGroup);
 
 
-        Obstacle.getInstance(slaveGroup,350);
-        Obstacle.getInstance(slaveGroup,-150);
-        Obstacle.getInstance(slaveGroup,-650);
-        Obstacle.getInstance(slaveGroup,-1150);
+//        Obstacle.getInstance(slaveGroup,350);
+//        Obstacle.getInstance(slaveGroup,-150);
+////        Obstacle.getInstance(slaveGroup,-650);
+//        Obstacle o = Obstacle.getInstance(slaveGroup,-1150);
+////        o.doubleCircle(slaveGroup);
+////        o.infinityObs(slaveGroup);
+////        o.finalWalaObs(slaveGroup,-4000);
+//        group.getChildren().add(slaveGroup);
+
+        Obstacle o = Obstacle.getInstance(slaveGroup,350);//Sahi simple single circle
+        o.fetchImageOfStar(Ball.giveCopy().getX(), 350,slaveGroup);
+        int xin=Ball.giveCopy().getX()-210;
+        int xout=Ball.giveCopy().getX()+210;
+
+
+        o.singlePlus(slaveGroup,-350);  //simple sobar plus
+        o.fetchImageOfStar(Ball.giveCopy().getX(), -350 + 200,slaveGroup);
+
+        o.createObstacle(slaveGroup,250,2,-1050,Ball.giveCopy().getX());//for single circle faster
+        o.fetchImageOfStar(Ball.giveCopy().getX(), -1050,slaveGroup);
+
+        ColorChanger colorChanger4 = new ColorChanger(Ball.giveCopy(), -1600);
+        colorChanger4.init(slaveGroup);
+        o.createObstacle(slaveGroup,350,2,-2100,Ball.giveCopy().getX());//for double out
+        o.fetchImageOfStar(Ball.giveCopy().getX(), -2100,slaveGroup);
+        o.createObstacle(slaveGroup,150,-.75,-2100,Ball.giveCopy().getX()); //for double in
+
+        o.plusObs(slaveGroup,-3000);
+        o.fetchImageOfStar(Ball.giveCopy().getX(), -3000 + 200,slaveGroup);
+
+        o.finalWalaObs(slaveGroup,-4000);
+        o.fetchImageOfStar(Ball.giveCopy().getX(), -4000,slaveGroup);
+//        o.doubleCircle(slaveGroup,200,1,-1500,Ball.giveCopy().getX());
+
+
+        o.createObstacle(slaveGroup,130,2,-5000,xout);//for double out
+        o.fetchImageOfStar(Ball.giveCopy().getX(), -5000,slaveGroup);
+        o.createObstacle(slaveGroup,200,2,-5000,xin-220);//for single circle faster
+
+//        o.doubleCircle(slaveGroup,300,1,-2300,Ball.giveCopy().getX());
+//        o.doubleCircle(slaveGroup,100,-1,-2300,Ball.giveCopy().getX());
+//
+
+        //infinity
+
+//        o.doubleCircle(slaveGroup,300,1,-3000,Ball.giveCopy().getX()-310);
+//        o.doubleCircle(slaveGroup,300,1,-3000,Ball.giveCopy().getX()+310);
+
         group.getChildren().add(slaveGroup);
 
         Main.udpateScene(group);

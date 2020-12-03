@@ -62,7 +62,7 @@ public class Ball extends Dimention implements Serializable {
                     public void handle(final ActionEvent t) {
                         circle.setLayoutX(circle.getLayoutX() + dx);
                         circle.setLayoutY(circle.getLayoutY() + dy);
-                        if (circle.getLayoutY()  <= 755)
+                        if (circle.getLayoutY()  <= 780)
                             dy = dyUp;
 
                         else {
@@ -176,6 +176,7 @@ public class Ball extends Dimention implements Serializable {
                         String up = upLoop.getStatus().toString();
                         String down = downLoop.getStatus().toString();
 
+                        System.out.println(up + " " + down);
 
                         if (up.equals("RUNNING") && !down.equals("RUNNING")) {
                             slaveGroup.setLayoutY(slaveGroup.getLayoutY() + 3);
@@ -260,9 +261,20 @@ public class Ball extends Dimention implements Serializable {
     private static boolean stopBall = false;
     public static void stopBall () {
         stopBall = true;
-        instanceOfBall.upLoop.stop();
-        instanceOfBall.downLoop.stop();
-        instanceOfBall.masterThread.stop();
+        instanceOfBall.upLoop.pause();
+        instanceOfBall.downLoop.pause();
+//        instanceOfBall.masterThread.stop();
+    }
+    public static void pauseAtGameOver () {
+        stopBall=true;
+    }
+    public static void resumeAtGameOver () {
+        stopBall = false;
+    }
+    public static void resumeBall(){
+        stopBall=false;
+        instanceOfBall.upLoop.play();
+        instanceOfBall.downLoop.play();
     }
 
     public static void destroyBall () {
