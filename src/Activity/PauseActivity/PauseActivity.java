@@ -2,7 +2,8 @@ package Activity.PauseActivity;
 
 import Activity.HomeActivity.HomeActivity;
 import Activity.PlayGame.PlayGame;
-import SaveGame.SaveGame;
+import Ball.*;
+import SaveGame.*;
 import com.sun.javafx.beans.event.AbstractNotifyListener;
 import javafx.beans.Observable;
 import javafx.event.EventHandler;
@@ -35,6 +36,7 @@ public class PauseActivity {
         Button resume = new Button("Resume");
         Button saveAndExit = new Button("Save and Exit");
         Button Exit = new Button("Exit");
+        Button Restart=new Button("Restart");
 
         resume.setLayoutX(480);
         resume.setLayoutY(100);
@@ -47,8 +49,20 @@ public class PauseActivity {
                 "-fx-font-weight: bold;"+
                 "-fx-font-size: 14px;"+
                 "-fx-padding: 10 20 10 20;");
+        Restart.setLayoutX(480);
+        Restart.setLayoutY(250);
+        Restart.setScaleX(2);
+        Restart.setScaleY(2);
+        Restart.setStyle("-fx-background-color: linear-gradient(#ffd65b, #e68400), linear-gradient(#ffef84, #f2ba44), linear-gradient(#ffea6a, #efaa22), linear-gradient(#ffe657 0%, #f8c202 50%, #eea10b 100%), linear-gradient(from 0% 0% to 15% 50%, rgba(255,255,255,0.9), rgba(255,255,255,0));"+
+                "-fx-background-radius: 30;"+
+                "-fx-background-insets: 0,1,2,3,0;"+
+                "-fx-text-fill: #654b00;"+
+                "-fx-font-weight: bold;"+
+                "-fx-font-size: 14px;"+
+                "-fx-padding: 10 20 10 20;");
+
         saveAndExit.setLayoutX(480);
-        saveAndExit.setLayoutY(300);
+        saveAndExit.setLayoutY(400);
         saveAndExit.setScaleX(2);
         saveAndExit.setScaleY(2);
         saveAndExit.setStyle("-fx-background-color: linear-gradient(#ffd65b, #e68400), linear-gradient(#ffef84, #f2ba44), linear-gradient(#ffea6a, #efaa22), linear-gradient(#ffe657 0%, #f8c202 50%, #eea10b 100%), linear-gradient(from 0% 0% to 15% 50%, rgba(255,255,255,0.9), rgba(255,255,255,0));"+
@@ -59,7 +73,7 @@ public class PauseActivity {
                 "-fx-font-size: 14px;"+
                 "-fx-padding: 10 20 10 20;");
         Exit.setLayoutX(480);
-        Exit.setLayoutY(500);
+        Exit.setLayoutY(550);
         Exit.setScaleX(2);
         Exit.setScaleY(2);
         Exit.setStyle("-fx-background-color: linear-gradient(#ffd65b, #e68400), linear-gradient(#ffef84, #f2ba44), linear-gradient(#ffea6a, #efaa22), linear-gradient(#ffe657 0%, #f8c202 50%, #eea10b 100%), linear-gradient(from 0% 0% to 15% 50%, rgba(255,255,255,0.9), rgba(255,255,255,0));"+
@@ -75,7 +89,7 @@ public class PauseActivity {
         group.getChildren().add(resume);
         group.getChildren().add(saveAndExit);
         group.getChildren().add(Exit);
-
+        group.getChildren().add(Restart);
         Scene scene=new Scene(group);
         Stage stage = new Stage();
         stage.initStyle(StageStyle.UNDECORATED);
@@ -104,6 +118,14 @@ public class PauseActivity {
             PlayGame.getInstance().onResume();
         });
 
+        Restart.setOnMouseClicked(mouseEvent -> {
+
+            Ball.destroyBall();
+            Score.destroy();
+            PlayGame.getInstance().startNewGame();
+            stage.close();
+
+        });
 
         saveAndExit.setOnMouseClicked(mouseEvent -> {
             stage.close();

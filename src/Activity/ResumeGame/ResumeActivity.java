@@ -8,6 +8,7 @@ import javafx.scene.Group;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Background;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
@@ -27,6 +28,31 @@ public class ResumeActivity {
         mv.setFitWidth(Screen.getPrimary().getVisualBounds().getWidth());
         mv.setFitHeight(Screen.getPrimary().getVisualBounds().getHeight()+50);
         group.getChildren().addAll(mv);
+
+
+
+
+        Button BackButton = new Button("Back");
+        BackButton.setLayoutX(100);
+        BackButton.setLayoutY(50);
+        BackButton.setScaleX(2);
+        BackButton.setScaleY(2);
+        BackButton.setStyle("-fx-background-color: linear-gradient(#ffd65b, #e68400), linear-gradient(#ffef84, #f2ba44), linear-gradient(#ffea6a, #efaa22), linear-gradient(#ffe657 0%, #f8c202 50%, #eea10b 100%), linear-gradient(from 0% 0% to 15% 50%, rgba(255,255,255,0.9), rgba(255,255,255,0));"+
+                "-fx-background-radius: 30;"+
+                "-fx-background-insets: 0,1,2,3,0;"+
+                "-fx-text-fill: #654b00;"+
+                "-fx-font-weight: bold;"+
+                "-fx-font-size: 14px;"+
+                "-fx-padding: 10 20 10 20;");
+
+        group.getChildren().add(BackButton);
+
+        BackButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+                Main.goToMainScreen();
+            }
+        });
 
 
         // I will display only 7 saved games
