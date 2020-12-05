@@ -7,11 +7,15 @@ import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
 
 import java.awt.*;
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
 import java.io.Serializable;
 
 public class Score implements Serializable {
 //    private int level = 0;
     private int stars = 0;
+    private String highscore="";
     public static final long serialVersionUID = 2L;
     private static Score storeScore;
     public static Score getInstance(int stars) {
@@ -41,6 +45,7 @@ public class Score implements Serializable {
 //        this.level = level;
 //    }
 
+
     public int getStars() {
         return stars;
     }
@@ -59,7 +64,28 @@ public class Score implements Serializable {
             storeScore = null;
         }
     }
+    public String GetHighScore(){
+        FileReader readFile=null;
+        BufferedReader reader=null;
+        try{
+           readFile=new FileReader("highscore.dat");
+            reader=new BufferedReader(readFile);
+            return reader.readLine();
+        }
+        catch(Exception e)
+        {
+            return "0";
+        }
+        finally
+        {
+            try {
+                reader.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
 
+    }
     public static Score giveCopy() {
         return storeScore;
     }
