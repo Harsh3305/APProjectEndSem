@@ -3,6 +3,7 @@ package Activity.HomeActivity;
 import Activity.PlayGame.PlayGame;
 import Activity.ResumeGame.ResumeActivity;
 import Ball.Ball;
+import HighScore.HighScore;
 import Obstacle.Obstacle;
 import SaveGame.Score;
 import animatefx.animation.Flash;
@@ -15,6 +16,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Control;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
@@ -162,9 +164,16 @@ public class HomeActivity extends Main {
         no.setOnMouseClicked(mouseEvent -> {
             //TODO:
 
+
+
             stage.close();
-            new Controller().playMusic();
-            new HomeActivity().exit();
+
+
+
+//            new Controller().playMusic();
+//            new HomeActivity().exit();
+
+            nameDialog(false);
 
         });
         yes.setOnMouseClicked(mouseEvent -> {
@@ -180,10 +189,12 @@ public class HomeActivity extends Main {
 
         restart.setOnMouseClicked(mouseEvent -> {
             stage.close();
-            new Controller().playMusic();
-            Ball.destroyBall();
-            Score.destroy();
-            play();
+//            new Controller().playMusic();
+//            Ball.destroyBall();
+//            Score.destroy();
+//            play();
+
+            nameDialog(true);
 
         });
 
@@ -203,6 +214,112 @@ public class HomeActivity extends Main {
         getpStage().hide();
     }
 
+    private void nameDialog (boolean isRestart) {
+        Group group = new Group();
+
+
+
+        Scene scene=new Scene(group);
+        Stage stage = new Stage();
+        stage.initStyle(StageStyle.UNDECORATED);
+        scene.setFill(Color.rgb(42, 40, 42));
+        stage.setScene(scene);
+        stage.setWidth(1000);
+        stage.setHeight(700);
+        // System.out.println(stage.getX() + " "  + stage.getY());
+        stage.setOpacity(0.7);
+        stage.setMaximized(false);
+        stage.setResizable(false);
+        stage.getIcons().add(new Image("file:icon.png"));
+        stage.show();
+        TextField name = new TextField("Enter your name");
+        name.setStyle("-fx-background-color: transparent, #909090, transparent, white;\n" +
+                "    -fx-background-radius: 0, 0, 0, 0;\n" +
+                "    -fx-padding: 0.166667em;");
+        name.setLayoutX(-700);
+        name.setLayoutY(500);
+        name.setScaleX(3);
+        name.setScaleY(3);
+
+        name.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+                if (name.getText().equals("Enter your name")) {
+                    name.setText("");
+                    name.setStyle("-fx-text-inner-color: red;");
+                }
+
+            }
+        });
+
+        Button ok = new Button("Submit");
+        ok.setStyle("-fx-background-color: linear-gradient(#ffd65b, #e68400), linear-gradient(#ffef84, #f2ba44), linear-gradient(#ffea6a, #efaa22), linear-gradient(#ffe657 0%, #f8c202 50%, #eea10b 100%), linear-gradient(from 0% 0% to 15% 50%, rgba(255,255,255,0.9), rgba(255,255,255,0));"+
+                "-fx-background-radius: 30;"+
+                "-fx-background-insets: 0,1,2,3,0;"+
+                "-fx-text-fill: #654b00;"+
+                "-fx-font-weight: bold;"+
+                "-fx-font-size: 14px;"+
+                "-fx-padding: 10 20 10 20;");
+        ok.setScaleX(3);
+        ok.setScaleY(3);
+        name.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent actionEvent) {
+                if (! name.getText().equals("Enter your name")) {
+
+                    ok.setStyle("-fx-background-color: linear-gradient(#ffd65b, #e68400), linear-gradient(#ffef84, #f2ba44), linear-gradient(#ffea6a, #efaa22), linear-gradient(#ffe657 0%, #f8c202 50%, #eea10b 100%), linear-gradient(from 0% 0% to 15% 50%, rgba(255,255,255,0.9), rgba(255,255,255,0));"+
+                            "-fx-background-radius: 30;"+
+                            "-fx-background-insets: 0,1,2,3,0;"+
+                            "-fx-text-fill: #654b00;"+
+                            "-fx-font-weight: bold;"+
+                            "-fx-font-size: 14px;"+
+                            "-fx-padding: 10 20 10 20;");
+                    ok.setText("Submit");
+                }
+            }
+        });
+
+
+
+
+        ok.setOnMouseClicked(mouseEvent -> {
+            if (name.getText().equals("Enter your name")) {
+                ok.setText("Enter your name");
+                ok.setStyle("-fx-text-inner-color: red;");
+            }
+            else {
+                //submit
+
+
+                String nameOfUser = name.getText();
+                HighScore.giveCopy().addUserScore(nameOfUser,Score.giveCopy().getStars());
+                stage.close();
+
+                if (isRestart) {
+                    new Controller().playMusic();
+                    Ball.destroyBall();
+                    Score.destroy();
+                    play();
+                }
+                else {
+                    new Controller().playMusic();
+                    new HomeActivity().exit();
+                }
+
+
+
+            }
+        });
+
+        ok.setLayoutY(500);
+        ok.setLayoutX(Ball.giveCopy().getX()-300);
+
+        name.setLayoutY(200);
+        name.setLayoutX(Ball.giveCopy().getX()-300);
+
+        group.getChildren().addAll(ok,name);
+
+    }
 
     public Group show () {
         Button NewGame,ResumeGame,Exit;

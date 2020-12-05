@@ -1,8 +1,10 @@
 package sample;
 
 import Activity.HomeActivity.HomeActivity;
+import Activity.LeaderBoard.LeaderBoard;
 import Activity.PlayGame.PlayGame;
 import Ball.Ball;
+import HighScore.HighScore;
 import SaveGame.Score;
 //import animatefx.animation.*;
 import animatefx.animation.*;
@@ -38,6 +40,7 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.sql.Time;
+import java.util.*;
 
 public class Main extends Application {
     private static Stage pStage;
@@ -47,7 +50,7 @@ public class Main extends Application {
 
         Controller.init();
         new Controller ().playMusic();
-
+        HighScore.getInstance().init();
 //        FXMLLoader loader = new FXMLLoader();
 //
 //        loader.setLocation(new URL("file:src/sample/sample.fxml"));
@@ -131,17 +134,6 @@ public class Main extends Application {
     }
 
     public static void main(String[] args) {
-//        String path = "file:sound.mp3";
-//
-//        //Instantiating Media class
-//        Media media = new Media(new File(path).toURI().toString());
-//
-//        //Instantiating MediaPlayer class
-//        MediaPlayer mediaPlayer = new MediaPlayer(media);
-//
-//        //by setting this property to true, the audio will be played
-//        mediaPlayer.setAutoPlay(true);
-
         launch(args);
     }
 
@@ -259,7 +251,13 @@ public class Main extends Application {
 //        Trophy.setScaleX(0.175);
 //        Trophy.setScaleY(0.175);
 
-        Trophy.setOnMouseClicked(mouseEvent -> openWeb("https://github.com/Harsh3305/APProjectEndSem"));
+//        Trophy.setOnMouseClicked(mouseEvent -> openWeb("https://github.com/Harsh3305/APProjectEndSem"));
+        Trophy.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+                leaderBoard();
+            }
+        });
 
         rotationButton(Trophy);
 
@@ -384,6 +382,31 @@ public class Main extends Application {
 //
 //        rotationButton(button);
     }
+
+    private static void leaderBoard () {
+//        HighScore.getInstance().init();
+
+        HashMap<String, Integer> map = HighScore.giveCopy().getHashMap();
+
+        List<Map.Entry<String, Integer>> list = new LinkedList<>(map.entrySet());
+
+        list.sort((o1, o2) -> o2.getValue().compareTo(o1.getValue()));
+
+        print (list);
+
+
+    }
+
+    private static void print(List<Map.Entry<String, Integer>> list) {
+//        System.out.println("Hello Ji");
+//        for (Map.Entry<String, Integer> stringIntegerEntry : list) {
+//            System.out.println(stringIntegerEntry);
+//        }
+
+        new LeaderBoard(list).show();
+
+    }
+
 
 
     public static  Scene getScene() {
