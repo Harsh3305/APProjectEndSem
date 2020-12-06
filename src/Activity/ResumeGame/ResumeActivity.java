@@ -20,7 +20,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 
-public class ResumeActivity {
+public class ResumeActivity extends  Main {
     public void showScreen () {
         ArrayList<SaveGame> saveGameArrayList = fetchData();
 

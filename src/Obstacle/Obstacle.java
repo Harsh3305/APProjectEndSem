@@ -31,7 +31,7 @@ public class Obstacle extends  Dimention  implements Serializable {
 //    private int size;
 //    private final int xCoor = 0;
 //    private int yCoor = 0;
-
+private static final long serialVersionUID = 2L;
 
     public static void updateList (ArrayList<Obstacle> obstacleArrayList ) {
         Obstacle.obstacleArrayList = obstacleArrayList;

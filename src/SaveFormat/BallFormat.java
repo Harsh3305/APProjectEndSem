@@ -7,7 +7,7 @@ import java.io.Serializable;
 public class BallFormat implements Serializable {
     private String color;
     private int x,y;
-
+    private static final long serialVersionUID = 2L;
 
 
     public String getColor() {

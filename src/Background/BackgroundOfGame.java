@@ -8,10 +8,12 @@ import sample.Main;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.Serializable;
 
-public class BackgroundOfGame extends Main {
+public class BackgroundOfGame extends Main implements Serializable {
     //image
 //
+    private static final long serialVersionUID = 2L;
     public void setBackgroundOfGame () {
 
     }

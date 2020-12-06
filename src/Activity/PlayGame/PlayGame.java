@@ -30,7 +30,7 @@ import javafx.util.Duration;
 import sample.Main;
 
 
-public class PlayGame {
+public class PlayGame extends  Main{
 
 
     private PlayGame (){}

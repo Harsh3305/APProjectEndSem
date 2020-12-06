@@ -16,9 +16,11 @@ import javafx.scene.shape.Shape;
 import javafx.util.Duration;
 
 import java.awt.*;
+import java.io.Serializable;
 
-public class ColorChanger extends Dimension {
+public class ColorChanger extends Dimension implements Serializable {
     private final static int x=775;
+    private static final long serialVersionUID = 2L;
     private Ball playerBall;
     private int y;
     public ColorChanger(Ball playerBall, int y) {
