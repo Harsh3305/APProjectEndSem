@@ -23,7 +23,7 @@ import sample.Main;
 import java.awt.*;
 import java.util.Collection;
 
-public class PauseActivity {
+public class PauseActivity extends  Main{
     // Resume Game
     // Exit
     // Save and Exit

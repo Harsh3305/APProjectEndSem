@@ -1,6 +1,9 @@
 package SaveFormat;
 
-public class ScoreFormat  {
+import java.io.Serializable;
+
+public class ScoreFormat implements Serializable {
+    private static final long serialVersionUID = 2L;
     private int score;
     public int getScore() {
         return score;

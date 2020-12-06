@@ -23,12 +23,13 @@ import sample.Main;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-public class LeaderBoard {
-
+public class LeaderBoard extends Main implements Serializable {
+    private static final long serialVersionUID = 2L;
     private List<Map.Entry<String, Integer>> list;
 
     public LeaderBoard(List<Map.Entry<String, Integer>> list) {
@@ -37,7 +38,7 @@ public class LeaderBoard {
 
     public void show () {
         Group group = new Group();
-
+        ArrayList<Thread > th = new ArrayList<>();
         FileInputStream input = null;
         try {
             input = new FileInputStream("previous.png");
@@ -56,6 +57,7 @@ public class LeaderBoard {
         BackButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent mouseEvent) {
+                stop(th);
                 Main.goToMainScreen();
             }
         });
@@ -115,6 +117,7 @@ public class LeaderBoard {
 
             Thread thread = new Thread(runnable);
             thread.start();
+            th.add(thread);
 
 
         }
@@ -222,5 +225,11 @@ public class LeaderBoard {
 
         return l;
 
+    }
+
+    private void stop (ArrayList<Thread> th) {
+        for (int i = 0; i < th.size(); i++) {
+            th.get(i).stop();
+        }
     }
 }
